@@ -5,7 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Neche Codes</title>
 <meta name="description" content="Web developer building modern websites, web applications, and WhatsApp automation systems.">
-<link rel="icon" type="image/png" href="./assets/images/logo.png">
+<link rel="icon" type="image/png" sizes="32x32" href="./assets/images/logo.png">
+<link rel="icon" type="image/png" sizes="16x16" href="./assets/images/logo.png">
+<link rel="apple-touch-icon" sizes="180x180" href="./assets/images/logo.png">
+<!-- IMPORTANT: logo.png must be a circular image (round shape with transparent background) for the favicon to appear circular in the address bar -->
 <!-- INSTRUCTION: Replace the favicon.png above with your own favicon image -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -72,7 +75,25 @@ nav.solid {
 .hero {
   padding: 180px 60px 140px;
   border-bottom: 1px solid var(--border);
-  max-width: 1100px;
+  max-width: 1400px;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 160px;
+  align-items: center;
+  margin: 0 auto;
+}
+.hero-left { }
+.hero-right {
+  padding-top: 20px;
+  padding-left: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.hero-right .hero-statement {
+  max-width: 100%;
+  margin-bottom: 0;
+  text-align: left;
 }
 .hero-role {
   font-family: 'Space Grotesk', sans-serif;
@@ -91,6 +112,14 @@ nav.solid {
   font-size: 18px; font-weight: 300;
   color: var(--text2); line-height: 1.75;
   max-width: 540px; margin-bottom: 64px;
+}
+.hero-right .hero-statement {
+  max-width: 100%;
+  margin-bottom: 0;
+  text-align: left;
+  font-size: 20px;
+  line-height: 1.85;
+  width: 100%;
 }
 .hero-details {
   display: flex; gap: 48px; flex-wrap: wrap;
@@ -162,20 +191,21 @@ nav.solid {
   border-radius: 6px; overflow: hidden;
   background: var(--card);
   position: relative;
-  aspect-ratio: 4/3;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .proj-preview img {
-  width: 100%; height: 100%;
-  object-fit: cover; object-position: center;
-  display: block; transition: transform 0.6s ease;
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  transition: transform 0.6s ease;
 }
 .project:hover .proj-preview img { transform: scale(1.02); }
-/* For logo/branding images that need contain instead of cover */
-.proj-preview.contain img {
-  object-fit: contain;
-  padding: 40px;
-}
 
 /* PROCESS */
 #process { padding: 140px 60px; border-bottom: 1px solid var(--border); }
@@ -383,7 +413,9 @@ footer {
 /* RESPONSIVE */
 @media (max-width: 900px) {
   nav { padding: 0 24px; }
-  .hero { padding: 120px 24px 100px; }
+  .hero { padding: 120px 24px 100px; grid-template-columns: 1fr; gap: 48px; }
+  .hero-right { padding-top: 0; padding-left: 0; justify-content: flex-start; }
+  .hero-right .hero-statement { font-size: 17px; text-align: left; }
   #work, #process, #tech, #contact, #about, .quick-contact, footer { padding: 80px 24px; }
   #about { grid-template-columns: 1fr; gap: 56px; }
   .project { grid-template-columns: 1fr; gap: 40px; padding: 56px 0; }
@@ -400,6 +432,7 @@ footer {
 
 @media (max-width: 600px) {
   .hero { padding: 100px 20px 80px; }
+  .hero-right .hero-statement { font-size: 16px; }
   .hero-name { font-size: clamp(36px, 12vw, 52px); letter-spacing: -2px; }
   .hero-statement { font-size: 16px; }
   .project { gap: 28px; padding: 40px 0; }
@@ -422,11 +455,12 @@ footer {
   .hero-name { font-size: 32px; }
   .hero-details { gap: 24px; }
   .hero-detail { min-width: 120px; }
-  .proj-preview { aspect-ratio: 3/2; }
+  .proj-preview { aspect-ratio: 16/9; }
   .qc-buttons { flex-direction: column; }
   .qc-btn { width: 100%; }
 }
 </style>
+<base target="_blank">
 <base target="_blank">
 </head>
 <body>
@@ -439,32 +473,34 @@ footer {
   </a>
   <div class="nav-right">
     <a href="#work" class="nav-link">Work</a>
-    <a href="#about" class="nav-link">About</a>
     <a href="#contact" class="nav-link">Contact</a>
     <a href="#contact" class="nav-contact-btn">Let's Talk</a>
   </div>
 </nav>
 
 <section class="hero r">
-  <div class="hero-role">Web Developer</div>
-  <h1 class="hero-name">NECHE<br>CODES</h1>
-  <p class="hero-statement">
-    Building modern websites, web applications, and digital products
-    with a focus on performance, usability, and long term reliability.
-  </p>
-  <div class="hero-details">
-    <div class="hero-detail">
-      <span class="hd-label">Availability</span>
-      <span class="hd-value on">Open to projects</span>
+  <div class="hero-left">
+    <div class="hero-role">Web Developer</div>
+    <h1 class="hero-name">NECHE<br>CODES</h1>
+    <div class="hero-details">
+      <div class="hero-detail">
+        <span class="hd-label">Availability</span>
+        <span class="hd-value on">Open to projects</span>
+      </div>
+      <div class="hero-detail">
+        <span class="hd-label">Primary focus</span>
+        <span class="hd-value">Web and Automation</span>
+      </div>
+      <div class="hero-detail">
+        <span class="hd-label">Experience</span>
+        <span class="hd-value">4 years</span>
+      </div>
     </div>
-    <div class="hero-detail">
-      <span class="hd-label">Primary focus</span>
-      <span class="hd-value">Web and Automation</span>
-    </div>
-    <div class="hero-detail">
-      <span class="hd-label">Experience</span>
-      <span class="hd-value">4 years</span>
-    </div>
+  </div>
+  <div class="hero-right r r-delay-2">
+    <p class="hero-statement">
+      I build high-performance websites and digital infrastructure from the ground up. From custom platforms to daily workflow automation, I engineer tools that scale business growth.
+    </p>
   </div>
 </section>
 
@@ -493,7 +529,6 @@ footer {
     </div>
     <div class="proj-right">
       <div class="proj-preview">
-        <!-- INSTRUCTION: Replace ./assets/images/baya-marketplace.png with your Baya screenshot -->
         <img src="./assets/images/baya-marketplace.png" alt="Baya Marketplace Preview">
       </div>
     </div>
@@ -516,126 +551,74 @@ footer {
         <span class="tech-tag">Typography</span>
         <span class="tech-tag">Colour System</span>
       </div>
-      <a href="javascript:void(0)" class="proj-cta" onclick="alert('Coming soon')">View project &rarr;</a>
     </div>
     <div class="proj-right">
-      <div class="proj-preview contain">
-        <!-- INSTRUCTION: Replace ./assets/images/doris-gifting.png with your Doris logo/image -->
+      <div class="proj-preview">
         <img src="./assets/images/doris-gifting.png" alt="Doris Gifting Co. Brand Identity">
       </div>
     </div>
   </div>
-</section>
 
-<section id="process">
-  <div class="section-eyebrow r">Process</div>
-  <div class="process-track">
-    <div class="process-step r r-delay-1">
-      <span class="ps-num">01</span>
-      <div class="ps-title">Discovery</div>
-      <p class="ps-desc">Understanding the business, the audience, and the goal before anything is built.</p>
+  <div class="work-heading r" style="margin-top: 80px; margin-bottom: 60px;">Experimental Work</div>
+
+  <div class="project r r-delay-1">
+    <div class="proj-left">
+      <h2 class="proj-name">TransferTrack</h2>
+      <span class="proj-section-label">Overview</span>
+      <p class="proj-text">
+        <strong style="color: #FFB800;">[Experimental — Not Launched]</strong><br><br>
+        A football transfer tracking platform that aggregates real-time transfer news,
+        player valuations, and deal confirmations across major European leagues. Features
+        live rumor tracking, fee estimations, and club-specific transfer dashboards.
+      </p>
+      <span class="proj-section-label">Technologies</span>
+      <div class="proj-tech">
+        <span class="tech-tag">React</span>
+        <span class="tech-tag">Node.js</span>
+        <span class="tech-tag">Web Scraping</span>
+        <span class="tech-tag">REST API</span>
+        <span class="tech-tag">Data Visualization</span>
+      </div>
     </div>
-    <div class="process-step r r-delay-2">
-      <span class="ps-num">02</span>
-      <div class="ps-title">Planning</div>
-      <p class="ps-desc">Mapping out pages, features, and scope. A clear proposal before work begins.</p>
-    </div>
-    <div class="process-step r r-delay-3">
-      <span class="ps-num">03</span>
-      <div class="ps-title">Design</div>
-      <p class="ps-desc">Custom design built for the specific business. No templates. No shortcuts.</p>
-    </div>
-    <div class="process-step r r-delay-4">
-      <span class="ps-num">04</span>
-      <div class="ps-title">Development</div>
-      <p class="ps-desc">Built from scratch. Tested across all screen sizes before anything goes live.</p>
-    </div>
-    <div class="process-step r r-delay-5">
-      <span class="ps-num">05</span>
-      <div class="ps-title">Delivery</div>
-      <p class="ps-desc">Clean handoff with documentation, source files, and ongoing support if needed.</p>
+    <div class="proj-right">
+      <div class="proj-preview">
+        <img src="./assets/images/transfertrack-preview.png" alt="TransferTrack Preview">
+      </div>
     </div>
   </div>
-</section>
 
-<section id="tech">
-  <div class="section-eyebrow r">Technologies</div>
-  <div class="tech-grid">
-    <div class="tech-col r r-delay-1">
-      <span class="tech-col-label">Frontend</span>
-      <div class="tech-list">
-        <span class="tech-item">HTML</span>
-        <span class="tech-item">CSS</span>
-        <span class="tech-item">JavaScript</span>
-        <span class="tech-item">React</span>
+  <div class="project r r-delay-2">
+    <div class="proj-left">
+      <h2 class="proj-name">CryptoTrack</h2>
+      <span class="proj-section-label">Overview</span>
+      <p class="proj-text">
+        <strong style="color: #FFB800;">[Experimental — Not Launched]</strong><br><br>
+        A cryptocurrency portfolio tracker with real-time price monitoring, asset
+        allocation visualization, and profit/loss analytics. Supports multi-wallet
+        integration and customizable price alerts for active traders.
+      </p>
+      <span class="proj-section-label">Technologies</span>
+      <div class="proj-tech">
+        <span class="tech-tag">JavaScript</span>
+        <span class="tech-tag">CoinGecko API</span>
+        <span class="tech-tag">Canvas</span>
+        <span class="tech-tag">LocalStorage</span>
+        <span class="tech-tag">PWA</span>
       </div>
     </div>
-    <div class="tech-col r r-delay-2">
-      <span class="tech-col-label">Backend</span>
-      <div class="tech-list">
-        <span class="tech-item">Node.js</span>
-        <span class="tech-item">Python</span>
-        <span class="tech-item">Supabase</span>
-        <span class="tech-item">Firebase</span>
-      </div>
-    </div>
-    <div class="tech-col r r-delay-3">
-      <span class="tech-col-label">E-Commerce</span>
-      <div class="tech-list">
-        <span class="tech-item">Payment APIs</span>
-        <span class="tech-item">Inventory Systems</span>
-        <span class="tech-item">Order Management</span>
-        <span class="tech-item">WhatsApp Integration</span>
-      </div>
-    </div>
-    <div class="tech-col r r-delay-4">
-      <span class="tech-col-label">Automation</span>
-      <div class="tech-list">
-        <span class="tech-item">WhatsApp Bots</span>
-        <span class="tech-item">Email Systems</span>
-        <span class="tech-item">AI Search</span>
-        <span class="tech-item">Webhook Pipelines</span>
-      </div>
-    </div>
-    <div class="tech-col r r-delay-5">
-      <span class="tech-col-label">Design</span>
-      <div class="tech-list">
-        <span class="tech-item">Figma</span>
-        <span class="tech-item">Brand Identity</span>
-        <span class="tech-item">UI/UX</span>
-        <span class="tech-item">Prototyping</span>
+    <div class="proj-right">
+      <div class="proj-preview">
+        <img src="./assets/images/cryptotrack-preview.png" alt="CryptoTrack Preview">
       </div>
     </div>
   </div>
 </section>
 
-<section id="about">
-  <div class="about-l r">
-    <div class="about-eyebrow">About</div>
-    <h2>Building things that work properly.</h2>
-    <p>A web developer with 4 years of experience building for the web. The focus is on websites that are properly built, easy to manage, and give businesses a reliable presence online.</p>
-    <p>Work spans schools, real estate companies, restaurants, and small businesses that want a website that actually performs. Projects range from simple business websites to full e-commerce systems with payment integration and automated order notifications.</p>
-    <p>Also building <strong>WhatsApp automation systems</strong> that handle customer messages automatically, saving business owners hours every day.</p>
-  </div>
-  <div class="about-r r r-delay-2">
-    <div class="about-block">
-      <span class="ab-label">Availability</span>
-      <span class="ab-text green">Open for new projects</span>
-    </div>
-    <div class="about-block">
-      <span class="ab-label">Primary focus</span>
-      <span class="ab-text">Web development, E-Commerce, WhatsApp Automation</span>
-    </div>
-    <div class="about-block">
-      <span class="ab-label">Experience</span>
-      <span class="ab-text">4 years building for the web</span>
-    </div>
-    <div class="about-block">
-      <span class="ab-label">Approach</span>
-      <span class="ab-text">Clean code, clear communication, long-term reliability</span>
-    </div>
-  </div>
-</section>
+
+
+
+
+
 
 <!-- QUICK CONTACT BAR - Visible before the full contact section -->
 <section class="quick-contact">
@@ -685,7 +668,6 @@ footer {
   </div>
   <div class="footer-right">
     <a href="#work" class="nav-link">Work</a>
-    <a href="#about" class="nav-link">About</a>
     <a href="#contact" class="nav-link">Contact</a>
   </div>
 </footer>
