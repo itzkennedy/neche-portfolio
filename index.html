@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neche Codes</title>
+<meta name="description" content="Web developer building modern websites, web applications, and WhatsApp automation systems.">
+<link rel="icon" type="image/png" href="./assets/images/logo.png">
+<!-- INSTRUCTION: Replace the favicon.png above with your own favicon image -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --bg: #050505;
+  --card: #0D0D0D;
+  --border: #181818;
+  --text: #FFFFFF;
+  --text2: #A0A0A0;
+  --muted: #555555;
+  --accent: #4ADE80;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  padding: 0 60px; height: 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background 0.4s, border-color 0.4s;
+}
+nav.solid {
+  background: rgba(5,5,5,0.97);
+  border-bottom-color: var(--border);
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 9px; text-decoration: none;
+}
+/* INSTRUCTION: Replace ./assets/images/logo.png with your logo image */
+.nav-logo img { width: 26px; height: 26px; border-radius: 50%; object-fit: cover; }
+.nav-logo-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px; font-weight: 600; color: var(--text); letter-spacing: -0.2px;
+}
+.nav-right {
+  display: flex; align-items: center; gap: 36px;
+}
+.nav-right a {
+  font-size: 13px; font-weight: 400; color: var(--text2);
+  text-decoration: none; transition: color 0.2s; letter-spacing: 0.1px;
+}
+.nav-right a:hover { color: var(--text); }
+.nav-contact-btn {
+  font-size: 12px; font-weight: 500; color: var(--bg);
+  background: var(--text); padding: 8px 18px; border-radius: 4px;
+  text-decoration: none; transition: all 0.2s;
+}
+.nav-contact-btn:hover { background: var(--accent); color: var(--bg); }
+
+/* HERO */
+.hero {
+  padding: 180px 60px 140px;
+  border-bottom: 1px solid var(--border);
+  max-width: 1100px;
+}
+.hero-role {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px; font-weight: 500;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 36px;
+}
+.hero-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(52px, 7vw, 96px);
+  font-weight: 700; letter-spacing: -4px;
+  line-height: 0.95; color: var(--text);
+  margin-bottom: 28px;
+}
+.hero-statement {
+  font-size: 18px; font-weight: 300;
+  color: var(--text2); line-height: 1.75;
+  max-width: 540px; margin-bottom: 64px;
+}
+.hero-details {
+  display: flex; gap: 48px; flex-wrap: wrap;
+}
+.hero-detail {
+  display: flex; flex-direction: column; gap: 4px;
+}
+.hd-label {
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted);
+}
+.hd-value {
+  font-size: 13px; font-weight: 400; color: var(--text2);
+}
+.hd-value.on { color: var(--accent); }
+
+/* WORK */
+#work { padding: 140px 60px; border-bottom: 1px solid var(--border); }
+.work-heading {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 100px;
+}
+.project {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: center;
+  padding: 80px 0;
+  border-top: 1px solid var(--border);
+}
+.project:last-child { border-bottom: 1px solid var(--border); }
+.proj-left {}
+.proj-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 700; letter-spacing: -2px;
+  line-height: 1.05; color: var(--text);
+  margin-bottom: 32px;
+}
+.proj-section-label {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 8px; display: block;
+}
+.proj-text {
+  font-size: 14px; font-weight: 300;
+  color: var(--text2); line-height: 1.8;
+  margin-bottom: 28px;
+}
+.proj-tech {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px;
+}
+.tech-tag {
+  font-size: 11px; font-weight: 400; color: var(--muted);
+  border: 1px solid var(--border); padding: 4px 12px; border-radius: 2px;
+  letter-spacing: 0.3px;
+}
+.proj-cta {
+  font-size: 13px; font-weight: 500; color: var(--text);
+  text-decoration: none; letter-spacing: 0.2px;
+  display: inline-flex; align-items: center; gap: 8px;
+  border-bottom: 1px solid var(--border); padding-bottom: 3px;
+  transition: border-color 0.2s, gap 0.2s;
+}
+.proj-cta:hover { border-color: var(--text); gap: 14px; }
+.proj-right {}
+.proj-preview {
+  border: 1px solid var(--border);
+  border-radius: 6px; overflow: hidden;
+  background: var(--card);
+  position: relative;
+  aspect-ratio: 4/3;
+  width: 100%;
+}
+.proj-preview img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  display: block; transition: transform 0.6s ease;
+}
+.project:hover .proj-preview img { transform: scale(1.02); }
+/* For logo/branding images that need contain instead of cover */
+.proj-preview.contain img {
+  object-fit: contain;
+  padding: 40px;
+}
+
+/* PROCESS */
+#process { padding: 140px 60px; border-bottom: 1px solid var(--border); }
+.section-eyebrow {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 80px;
+}
+.process-track {
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  gap: 0; border: 1px solid var(--border); border-radius: 6px; overflow: hidden;
+}
+.process-step {
+  padding: 40px 32px;
+  border-right: 1px solid var(--border);
+  background: var(--card); transition: background 0.2s;
+}
+.process-step:last-child { border-right: none; }
+.process-step:hover { background: #111; }
+.ps-num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px; font-weight: 700;
+  color: var(--muted); letter-spacing: 1px;
+  display: block; margin-bottom: 20px;
+}
+.ps-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 16px; font-weight: 700;
+  color: var(--text); letter-spacing: -0.3px;
+  margin-bottom: 10px;
+}
+.ps-desc {
+  font-size: 12px; font-weight: 300;
+  color: var(--muted); line-height: 1.65;
+}
+
+/* TECH */
+#tech { padding: 140px 60px; border-bottom: 1px solid var(--border); }
+.tech-grid {
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  gap: 0; margin-top: 60px;
+  border: 1px solid var(--border); border-radius: 6px; overflow: hidden;
+}
+.tech-col {
+  padding: 36px 32px;
+  border-right: 1px solid var(--border);
+  background: var(--card);
+}
+.tech-col:last-child { border-right: none; }
+.tech-col-label {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 24px; display: block;
+}
+.tech-list {
+  display: flex; flex-direction: column; gap: 10px;
+}
+.tech-item {
+  font-size: 13px; font-weight: 300; color: var(--text2);
+}
+
+/* ABOUT */
+#about {
+  padding: 140px 60px; border-bottom: 1px solid var(--border);
+  display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: start;
+}
+.about-l {}
+.about-eyebrow {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 32px;
+}
+.about-l h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 700; letter-spacing: -2px;
+  color: var(--text); line-height: 1.05; margin-bottom: 36px;
+}
+.about-l p {
+  font-size: 15px; font-weight: 300;
+  color: var(--text2); line-height: 1.9; margin-bottom: 20px;
+}
+.about-l strong { color: var(--text); font-weight: 500; }
+.about-r {}
+.about-block {
+  border-top: 1px solid var(--border); padding: 24px 0;
+}
+.about-block:first-child { border-top: none; padding-top: 0; }
+.ab-label {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 8px; display: block;
+}
+.ab-text {
+  font-size: 14px; font-weight: 300; color: var(--text2); line-height: 1.7;
+}
+.ab-text.green { color: var(--accent); font-weight: 400; }
+
+/* QUICK CONTACT BAR */
+.quick-contact {
+  padding: 60px 60px;
+  border-bottom: 1px solid var(--border);
+  background: var(--card);
+}
+.quick-contact-inner {
+  max-width: 1100px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 24px;
+}
+.qc-text {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(20px, 3vw, 32px);
+  font-weight: 600; color: var(--text);
+  letter-spacing: -1px; line-height: 1.2;
+}
+.qc-text span { color: var(--muted); }
+.qc-buttons {
+  display: flex; gap: 16px; flex-wrap: wrap;
+}
+.qc-btn {
+  font-size: 13px; font-weight: 500;
+  padding: 14px 28px; border-radius: 4px;
+  text-decoration: none; transition: all 0.2s;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.qc-btn-primary {
+  background: var(--text); color: var(--bg);
+}
+.qc-btn-primary:hover { background: var(--accent); }
+.qc-btn-secondary {
+  border: 1px solid var(--border); color: var(--text2);
+}
+.qc-btn-secondary:hover { border-color: var(--text); color: var(--text); }
+
+/* CONTACT */
+#contact {
+  padding: 140px 60px; border-bottom: 1px solid var(--border);
+}
+.contact-statement {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(40px, 6vw, 80px);
+  font-weight: 700; letter-spacing: -3px;
+  color: var(--text); line-height: 1.0;
+  margin-bottom: 64px; max-width: 800px;
+}
+.contact-statement span { color: var(--muted); }
+.contact-links {
+  display: flex; flex-direction: column; gap: 0;
+  border: 1px solid var(--border); border-radius: 6px; overflow: hidden;
+  max-width: 520px;
+}
+.contact-link {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 22px 28px;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  background: var(--card);
+  transition: background 0.2s;
+}
+.contact-link:last-child { border-bottom: none; }
+.contact-link:hover { background: #111; }
+.cl-left { display: flex; flex-direction: column; gap: 3px; }
+.cl-label {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted);
+}
+.cl-value {
+  font-size: 14px; font-weight: 400; color: var(--text);
+}
+.cl-arrow {
+  font-size: 16px; color: var(--muted); transition: color 0.2s;
+}
+.contact-link:hover .cl-arrow { color: var(--text); }
+
+/* FOOTER */
+footer {
+  padding: 28px 60px;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+}
+.footer-left { display: flex; align-items: center; gap: 10px; }
+/* INSTRUCTION: Replace ./assets/images/logo.png with your logo image */
+.footer-left img { width: 20px; height: 20px; border-radius: 50%; object-fit: cover; opacity: 0.4; }
+.footer-left span { font-size: 12px; color: var(--muted); }
+.footer-right { display: flex; gap: 24px; }
+.footer-right a {
+  font-size: 12px; color: var(--muted); text-decoration: none; transition: color 0.2s;
+}
+.footer-right a:hover { color: var(--text2); }
+
+/* REVEAL ANIMATION - First time only */
+.r {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.r.v { opacity: 1; transform: translateY(0); }
+
+/* Stagger delays for cascading effect */
+.r-delay-1 { transition-delay: 0.1s; }
+.r-delay-2 { transition-delay: 0.2s; }
+.r-delay-3 { transition-delay: 0.3s; }
+.r-delay-4 { transition-delay: 0.4s; }
+.r-delay-5 { transition-delay: 0.5s; }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  nav { padding: 0 24px; }
+  .hero { padding: 120px 24px 100px; }
+  #work, #process, #tech, #contact, #about, .quick-contact, footer { padding: 80px 24px; }
+  #about { grid-template-columns: 1fr; gap: 56px; }
+  .project { grid-template-columns: 1fr; gap: 40px; padding: 56px 0; }
+  .process-track { grid-template-columns: 1fr 1fr; }
+  .process-step { border-bottom: 1px solid var(--border); }
+  .tech-grid { grid-template-columns: 1fr 1fr; }
+  .tech-col { border-bottom: 1px solid var(--border); }
+  .hero-details { gap: 32px; }
+  .contact-statement { font-size: clamp(36px, 8vw, 60px); letter-spacing: -2px; }
+  .quick-contact-inner { flex-direction: column; align-items: flex-start; }
+  .qc-buttons { width: 100%; }
+  .qc-btn { flex: 1; justify-content: center; }
+}
+
+@media (max-width: 600px) {
+  .hero { padding: 100px 20px 80px; }
+  .hero-name { font-size: clamp(36px, 12vw, 52px); letter-spacing: -2px; }
+  .hero-statement { font-size: 16px; }
+  .project { gap: 28px; padding: 40px 0; }
+  .proj-name { font-size: clamp(24px, 6vw, 32px); letter-spacing: -1px; }
+  .process-track { grid-template-columns: 1fr; }
+  .tech-grid { grid-template-columns: 1fr; }
+  .process-step, .tech-col { border-right: none; border-bottom: 1px solid var(--border); }
+  .process-step:last-child, .tech-col:last-child { border-bottom: none; }
+  .about-l h2 { font-size: clamp(24px, 6vw, 32px); letter-spacing: -1px; }
+  .contact-statement { font-size: clamp(28px, 8vw, 40px); letter-spacing: -1px; }
+  .qc-text { font-size: 20px; }
+  .qc-btn { padding: 12px 20px; font-size: 12px; }
+  nav { height: 56px; }
+  .nav-right { gap: 20px; }
+  .nav-right a { font-size: 12px; }
+  .nav-contact-btn { padding: 6px 14px; font-size: 11px; }
+}
+
+@media (max-width: 400px) {
+  .hero-name { font-size: 32px; }
+  .hero-details { gap: 24px; }
+  .hero-detail { min-width: 120px; }
+  .proj-preview { aspect-ratio: 3/2; }
+  .qc-buttons { flex-direction: column; }
+  .qc-btn { width: 100%; }
+}
+</style>
+<base target="_blank">
+</head>
+<body>
+
+<nav id="nav">
+  <a href="javascript:void(0)" onclick="window.scrollTo({top:0,behavior:'smooth'})" class="nav-logo">
+    <!-- INSTRUCTION: Replace ./assets/images/logo.png with your logo image -->
+    <img src="./assets/images/logo.png" alt="Neche Codes">
+    <span class="nav-logo-name">Neche Codes</span>
+  </a>
+  <div class="nav-right">
+    <a href="#work" class="nav-link">Work</a>
+    <a href="#about" class="nav-link">About</a>
+    <a href="#contact" class="nav-link">Contact</a>
+    <a href="#contact" class="nav-contact-btn">Let's Talk</a>
+  </div>
+</nav>
+
+<section class="hero r">
+  <div class="hero-role">Web Developer</div>
+  <h1 class="hero-name">NECHE<br>CODES</h1>
+  <p class="hero-statement">
+    Building modern websites, web applications, and digital products
+    with a focus on performance, usability, and long term reliability.
+  </p>
+  <div class="hero-details">
+    <div class="hero-detail">
+      <span class="hd-label">Availability</span>
+      <span class="hd-value on">Open to projects</span>
+    </div>
+    <div class="hero-detail">
+      <span class="hd-label">Primary focus</span>
+      <span class="hd-value">Web and Automation</span>
+    </div>
+    <div class="hero-detail">
+      <span class="hd-label">Experience</span>
+      <span class="hd-value">4 years</span>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="work-heading r">Selected Work</div>
+
+  <div class="project r r-delay-1">
+    <div class="proj-left">
+      <h2 class="proj-name">Baya Marketplace</h2>
+      <span class="proj-section-label">Overview</span>
+      <p class="proj-text">
+        A full marketplace for buying and selling products, built specifically
+        for students in Nigeria. Features verified seller profiles, AI powered
+        product search, WhatsApp chat integration, and a store section fulfilled
+        directly by the platform.
+      </p>
+      <span class="proj-section-label">Technologies</span>
+      <div class="proj-tech">
+        <span class="tech-tag">HTML</span>
+        <span class="tech-tag">CSS</span>
+        <span class="tech-tag">JavaScript</span>
+        <span class="tech-tag">E-Commerce</span>
+        <span class="tech-tag">AI Search</span>
+      </div>
+      <a href="https://shopbaya.name.ng" target="_blank" class="proj-cta">Visit live site &rarr;</a>
+    </div>
+    <div class="proj-right">
+      <div class="proj-preview">
+        <!-- INSTRUCTION: Replace ./assets/images/baya-marketplace.png with your Baya screenshot -->
+        <img src="./assets/images/baya-marketplace.png" alt="Baya Marketplace Preview">
+      </div>
+    </div>
+  </div>
+
+  <div class="project r r-delay-2">
+    <div class="proj-left">
+      <h2 class="proj-name">Doris Gifting Co.</h2>
+      <span class="proj-section-label">Overview</span>
+      <p class="proj-text">
+        Logo and brand identity for a premium gifting company.
+        Designed with a strong typographic personality and a refined
+        ribbon motif. Delivered in three colour variations and multiple
+        format exports for print and digital use.
+      </p>
+      <span class="proj-section-label">Deliverables</span>
+      <div class="proj-tech">
+        <span class="tech-tag">Logo Design</span>
+        <span class="tech-tag">Brand Identity</span>
+        <span class="tech-tag">Typography</span>
+        <span class="tech-tag">Colour System</span>
+      </div>
+      <a href="javascript:void(0)" class="proj-cta" onclick="alert('Coming soon')">View project &rarr;</a>
+    </div>
+    <div class="proj-right">
+      <div class="proj-preview contain">
+        <!-- INSTRUCTION: Replace ./assets/images/doris-gifting.png with your Doris logo/image -->
+        <img src="./assets/images/doris-gifting.png" alt="Doris Gifting Co. Brand Identity">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="process">
+  <div class="section-eyebrow r">Process</div>
+  <div class="process-track">
+    <div class="process-step r r-delay-1">
+      <span class="ps-num">01</span>
+      <div class="ps-title">Discovery</div>
+      <p class="ps-desc">Understanding the business, the audience, and the goal before anything is built.</p>
+    </div>
+    <div class="process-step r r-delay-2">
+      <span class="ps-num">02</span>
+      <div class="ps-title">Planning</div>
+      <p class="ps-desc">Mapping out pages, features, and scope. A clear proposal before work begins.</p>
+    </div>
+    <div class="process-step r r-delay-3">
+      <span class="ps-num">03</span>
+      <div class="ps-title">Design</div>
+      <p class="ps-desc">Custom design built for the specific business. No templates. No shortcuts.</p>
+    </div>
+    <div class="process-step r r-delay-4">
+      <span class="ps-num">04</span>
+      <div class="ps-title">Development</div>
+      <p class="ps-desc">Built from scratch. Tested across all screen sizes before anything goes live.</p>
+    </div>
+    <div class="process-step r r-delay-5">
+      <span class="ps-num">05</span>
+      <div class="ps-title">Delivery</div>
+      <p class="ps-desc">Clean handoff with documentation, source files, and ongoing support if needed.</p>
+    </div>
+  </div>
+</section>
+
+<section id="tech">
+  <div class="section-eyebrow r">Technologies</div>
+  <div class="tech-grid">
+    <div class="tech-col r r-delay-1">
+      <span class="tech-col-label">Frontend</span>
+      <div class="tech-list">
+        <span class="tech-item">HTML</span>
+        <span class="tech-item">CSS</span>
+        <span class="tech-item">JavaScript</span>
+        <span class="tech-item">React</span>
+      </div>
+    </div>
+    <div class="tech-col r r-delay-2">
+      <span class="tech-col-label">Backend</span>
+      <div class="tech-list">
+        <span class="tech-item">Node.js</span>
+        <span class="tech-item">Python</span>
+        <span class="tech-item">Supabase</span>
+        <span class="tech-item">Firebase</span>
+      </div>
+    </div>
+    <div class="tech-col r r-delay-3">
+      <span class="tech-col-label">E-Commerce</span>
+      <div class="tech-list">
+        <span class="tech-item">Payment APIs</span>
+        <span class="tech-item">Inventory Systems</span>
+        <span class="tech-item">Order Management</span>
+        <span class="tech-item">WhatsApp Integration</span>
+      </div>
+    </div>
+    <div class="tech-col r r-delay-4">
+      <span class="tech-col-label">Automation</span>
+      <div class="tech-list">
+        <span class="tech-item">WhatsApp Bots</span>
+        <span class="tech-item">Email Systems</span>
+        <span class="tech-item">AI Search</span>
+        <span class="tech-item">Webhook Pipelines</span>
+      </div>
+    </div>
+    <div class="tech-col r r-delay-5">
+      <span class="tech-col-label">Design</span>
+      <div class="tech-list">
+        <span class="tech-item">Figma</span>
+        <span class="tech-item">Brand Identity</span>
+        <span class="tech-item">UI/UX</span>
+        <span class="tech-item">Prototyping</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="about-l r">
+    <div class="about-eyebrow">About</div>
+    <h2>Building things that work properly.</h2>
+    <p>A web developer with 4 years of experience building for the web. The focus is on websites that are properly built, easy to manage, and give businesses a reliable presence online.</p>
+    <p>Work spans schools, real estate companies, restaurants, and small businesses that want a website that actually performs. Projects range from simple business websites to full e-commerce systems with payment integration and automated order notifications.</p>
+    <p>Also building <strong>WhatsApp automation systems</strong> that handle customer messages automatically, saving business owners hours every day.</p>
+  </div>
+  <div class="about-r r r-delay-2">
+    <div class="about-block">
+      <span class="ab-label">Availability</span>
+      <span class="ab-text green">Open for new projects</span>
+    </div>
+    <div class="about-block">
+      <span class="ab-label">Primary focus</span>
+      <span class="ab-text">Web development, E-Commerce, WhatsApp Automation</span>
+    </div>
+    <div class="about-block">
+      <span class="ab-label">Experience</span>
+      <span class="ab-text">4 years building for the web</span>
+    </div>
+    <div class="about-block">
+      <span class="ab-label">Approach</span>
+      <span class="ab-text">Clean code, clear communication, long-term reliability</span>
+    </div>
+  </div>
+</section>
+
+<!-- QUICK CONTACT BAR - Visible before the full contact section -->
+<section class="quick-contact">
+  <div class="quick-contact-inner r">
+    <div class="qc-text">Have a project in mind?<br><span>Let us talk about it.</span></div>
+    <div class="qc-buttons">
+      <a href="https://wa.me/2347012389126" target="_blank" class="qc-btn qc-btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        Chat on WhatsApp
+      </a>
+      <a href="mailto:nechecode@gmail.com" class="qc-btn qc-btn-secondary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Send an email
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <h2 class="contact-statement r">
+    Let us build<br>
+    <span>something real.</span>
+  </h2>
+  <div class="contact-links r r-delay-1">
+    <a href="https://wa.me/2347012389126" target="_blank" class="contact-link">
+      <div class="cl-left">
+        <span class="cl-label">WhatsApp</span>
+        <span class="cl-value">Click to chat</span>
+      </div>
+      <span class="cl-arrow">&rarr;</span>
+    </a>
+    <a href="mailto:nechecode@gmail.com" class="contact-link">
+      <div class="cl-left">
+        <span class="cl-label">Email</span>
+        <span class="cl-value">nechecode@gmail.com</span>
+      </div>
+      <span class="cl-arrow">&rarr;</span>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-left">
+    <!-- INSTRUCTION: Replace ./assets/images/logo.png with your logo image -->
+    <img src="./assets/images/logo.png" alt="Neche Codes">
+    <span>Neche Codes</span>
+  </div>
+  <div class="footer-right">
+    <a href="#work" class="nav-link">Work</a>
+    <a href="#about" class="nav-link">About</a>
+    <a href="#contact" class="nav-link">Contact</a>
+  </div>
+</footer>
+
+<script>
+// Nav background on scroll
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 50) nav.classList.add('solid');
+  else nav.classList.remove('solid');
+});
+
+// Smooth scroll for all nav links - prevents page jump/refresh
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    const targetId = this.getAttribute('href');
+    if (targetId === '#') return;
+    const targetElement = document.querySelector(targetId);
+    if (targetElement) {
+      const navHeight = nav.offsetHeight;
+      const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight - 20;
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
+      });
+    }
+  });
+});
+
+// Reveal animation on scroll - FIRST TIME ONLY
+// Uses sessionStorage so it only animates once per browser session
+(function() {
+  const hasAnimated = sessionStorage.getItem('nechecodes-animated');
+
+  const revealElements = document.querySelectorAll('.r');
+
+  if (hasAnimated) {
+    // If already animated this session, show everything immediately
+    revealElements.forEach(el => el.classList.add('v'));
+    return;
+  }
+
+  // First time - animate on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('v');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  revealElements.forEach(el => observer.observe(el));
+
+  // Mark as animated for this session
+  sessionStorage.setItem('nechecodes-animated', 'true');
+})();
+</script>
+
+</body>
+</html>
