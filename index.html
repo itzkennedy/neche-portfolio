@@ -443,6 +443,14 @@ footer { border-top: 1px solid var(--border); padding: 44px 0; }
   .container { padding: 0 22px; }
   .nav-links, .nav-cta { display: none; }
   .nav-links.open { display: flex; position: fixed; top: 74px; left: 0; right: 0; flex-direction: column; align-items: flex-start; gap: 4px; background: rgba(250,248,245,0.98); padding: 18px 22px 26px; border-bottom: 1px solid var(--border); backdrop-filter: blur(12px); }
+  /* The top bar while the mobile menu is open. Its cream normally comes from
+     nav.solid, which is toggled on scroll and shared with desktop - and at
+     scroll 0 the bar is transparent, so the open state needs its own rule.
+     Driven by the explicit .menu-open class that the burger toggle puts on the
+     <nav> (removed again on close, on nav-link click and when the contact modal
+     opens), so it needs no parent/descendant selector. Scoped to this
+     breakpoint, and !important so it wins over nav.solid at any scroll depth. */
+  nav.menu-open { background: #E5E5E5 !important; }
   .nav-links.open a:not(.nav-cta) { display: block; width: 100%; padding: 12px 0; font-size: 16px; color: var(--ink); }
   .nav-links.open .nav-cta { display: inline-flex; margin-top: 10px; color: #fff; }
   .nav-burger { display: flex; }
@@ -1295,10 +1303,12 @@ footer { border-top: 1px solid var(--border); padding: 44px 0; }
   const navlinks = document.getElementById('navlinks');
   burger.addEventListener('click', () => {
     const open = navlinks.classList.toggle('open');
+    nav.classList.toggle('menu-open', open);
     burger.setAttribute('aria-expanded', open);
   });
   navlinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
     navlinks.classList.remove('open');
+    nav.classList.remove('menu-open');
     burger.setAttribute('aria-expanded', 'false');
   }));
 
@@ -1421,6 +1431,7 @@ footer { border-top: 1px solid var(--border); padding: 44px 0; }
     lastFocused = (active && active !== document.body && active !== document.documentElement) ? active : talkBtn;
     if (navlinks.classList.contains('open')) {
       navlinks.classList.remove('open');
+      nav.classList.remove('menu-open');
       burger.setAttribute('aria-expanded', 'false');
     }
     modal.classList.add('open');
