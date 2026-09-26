@@ -447,9 +447,26 @@ footer { border-top: 1px solid var(--border); padding: 44px 0; }
   .nav-links.open .nav-cta { display: inline-flex; margin-top: 10px; color: #fff; }
   .nav-burger { display: flex; }
   .section { padding: 90px 0; }
-  .hero { padding: 110px 0 0; display: block; }
-  .hero-scrim { display: none; }
-  .hero-bg { position: relative; inset: auto; width: 100%; height: 52vh; margin-top: 50px; transform: none !important; }
+  /* The portrait leads the first screen, exactly as it does on desktop where it
+     is inset:0 behind the text. It used to be pushed down by 110px of hero
+     padding plus a 50px margin, which left a 160px empty band above the main
+     visual on a 812px screen - and left the fixed nav's white wordmark sitting
+     on white. Both were leftovers from the desktop absolute layout. */
+  .hero { padding: 0; display: block; }
+  /* The fixed nav's wordmark is white, so it needs the same darkening the
+     desktop scrim gives it - shaped for this layout: a top band that carries
+     the nav, fading out well before the portrait's own bottom fade. Bounded to
+     the image (52vh) so it never washes over the copy below. */
+  .hero-scrim {
+    top: 0; left: 0; right: 0; bottom: auto;
+    height: 52vh;
+    background: linear-gradient(180deg,
+      rgba(15,20,26,0.78) 0%,
+      rgba(15,20,26,0.62) 17%,
+      rgba(15,20,26,0.22) 30%,
+      rgba(15,20,26,0) 44%);
+  }
+  .hero-bg { position: relative; inset: auto; width: 100%; height: 52vh; margin-top: 0; transform: none !important; }
   .hero-portrait { position: relative; top: auto; right: auto; left: 0; width: 100%; height: 52vh; object-position: 22% 18%; mask-image: linear-gradient(180deg, #000 68%, transparent 100%); -webkit-mask-image: linear-gradient(180deg, #000 68%, transparent 100%); }
   /* keep the same 22px side gutter the rest of the mobile page uses, so
      no hero copy sits against the screen edge */
@@ -483,92 +500,39 @@ footer { border-top: 1px solid var(--border); padding: 44px 0; }
   .to-top { right: 18px; bottom: 18px; width: 44px; height: 44px; }
 
   /* ---------------- MOBILE PROJECT COMPOSITION ----------------
-     One composition per project: the shot fills the entire block and the
-     copy sits on top of it. No separate white text panel stacked above or
-     below the image, and the image is no longer a small picture with a
-     text block underneath. Same tokens, type, spacing and cover/top
-     image treatment as the desktop system - only the stacking changes.
-
-     --proj-clear is the band at the top left uncovered so the screenshot
-     still reads as a screenshot; --proj-fade is the ramp from there to a
-     firm cream wash. The wash has to be this strong: the existing dark
-     body copy is 15px, and the darkest pixels inside these captures are
-     near-black, so anything lighter drops it under 4.5:1. */
-  .proj-baya, .proj-neche, .proj-vulcan, .proj-med, .proj-split {
-    --proj-clear: clamp(148px, 42vw, 206px);
-    --proj-fade: 116px;
-    display: block;
-    position: relative;
-    gap: 0;
-  }
-  /* the visual becomes the background layer of the whole composition */
-  .proj-media, .vulcan-panel {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
+     Keeps each project visual and its text bound together instead of
+     text-then-full-width-image. Media leads; the copy block overlaps
+     upward onto it as a card. Same tokens as the desktop system. */
+  .proj-baya, .proj-neche, .proj-vulcan, .proj-med, .proj-split { gap: 0; }
+  .proj-media, .vulcan-panel { order: -1; }
+  .proj-copy {
+    position: relative; z-index: 2;
+    margin-top: -24px;
+    background: var(--card);
+    border: 1px solid var(--border);
     border-radius: var(--radius);
+    padding: 24px 22px 26px;
   }
-  /* rgba() here is --bg (#faf8f5) */
-  .proj-media::after, .vulcan-panel::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    pointer-events: none;
-    background: linear-gradient(180deg,
-      rgba(250,248,245,0) 0,
-      rgba(250,248,245,0) var(--proj-clear),
-      rgba(250,248,245,.90) calc(var(--proj-clear) + var(--proj-fade)),
-      rgba(250,248,245,.92) 100%);
-  }
-  .vulcan-panel { padding: 30px 22px; min-height: 0; justify-content: flex-start; }
-  .vulcan-panel > * { position: relative; z-index: 2; }
+  /* screenshots stay large and recognisable, never a full-height block */
+  .proj-media .pm-frame { aspect-ratio: 16 / 10; }
+  .proj-media .pm-frame img { height: 100%; object-fit: cover; object-position: top center; }
+  .proj-media.pm-sq .pm-frame { aspect-ratio: 1 / 1; }
+  .proj-media > img.proj-shot { width: 100%; max-height: 58vw; object-fit: cover; object-position: top center; }
+  .proj-media.pm-sq > img.proj-shot { max-height: 84vw; }
+  /* the copy card overlaps the bottom of the media, so the caption row
+     moves above the shot on mobile - otherwise it gets covered up */
+  .proj-media { display: flex; flex-direction: column; }
+  .proj-media .pm-note { order: -1; border-top: 0; border-bottom: 1px solid var(--border); }
+  .vulcan-panel { padding: 26px 20px; }
   .vulcan-panel .vp-step { grid-template-columns: 30px 1fr; gap: 12px; }
   .vulcan-panel .vp-step + .vp-step { padding-top: 15px; margin-top: 15px; }
-
-  /* the shot fills the composition; existing cover + top treatment kept */
-  .proj-media { display: flex; flex-direction: column; background: var(--card); }
-  .proj-media .pm-frame, .proj-media > img.proj-shot {
-    flex: 1 1 auto;
-    min-height: 0;
-    aspect-ratio: auto;
-    max-height: none;
-  }
-  .proj-media .pm-frame img, .proj-media > img.proj-shot {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top center;
-  }
-  /* the caption moves to the foot of the composition instead of
-     forming a solid bar above the shot */
-  .proj-media .pm-note {
-    order: 0;
-    flex: 0 0 auto;
-    background: none;
-    border: 0;
-    color: var(--muted);
-    padding: 12px 20px 14px;
-  }
-  /* the copy is the only in-flow child, so it sets the composition
-     height and the visual stretches to match. It starts below the clear
-     band, and the deep bottom padding leaves the caption its own space. */
-  .proj-copy {
-    position: relative;
-    z-index: 2;
-    margin-top: 0;
-    background: none;
-    border: 0;
-    border-radius: 0;
-    padding: calc(var(--proj-clear) + var(--proj-fade) + 26px) 22px 72px;
-  }
 }
 
 @media (max-width: 560px) {
   /* ---------------- SMALL-SCREEN TYPE + SPACING ----------------
      Individually tuned rather than uniformly scaled down. */
   .proj { padding: 52px 0; }
-  .proj-copy { padding: calc(var(--proj-clear) + var(--proj-fade) + 22px) 18px 68px; }
+  .proj-copy { margin-top: -20px; padding: 20px 18px 22px; border-radius: 14px; }
   .proj h3 { font-size: clamp(27px, 8.2vw, 32px); margin-bottom: 14px; }
   .proj-tag { font-size: 10.5px; letter-spacing: 1.2px; margin-bottom: 10px; }
   .proj-meta { font-size: 12.5px; margin-bottom: 13px; }
