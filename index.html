@@ -426,7 +426,11 @@ footer { border-top: 1px solid var(--border); padding: 44px 0; }
 
 /* ---------------- RESPONSIVE ---------------- */
 @media (max-width: 960px) {
-  .hero-inner, .years-inner, .proj-baya, .proj-neche, .proj-vulcan, .proj-med, .proj-split, .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+  /* minmax(0,1fr), not 1fr: a bare 1fr is minmax(auto,1fr), so the auto
+     minimum lets wide content (the "4+ YEARS" numeral) push the track past
+     its container and get clipped by the section's overflow. Desktop is
+     untouched - this only applies at 960px and below. */
+  .hero-inner, .years-inner, .proj-baya, .proj-neche, .proj-vulcan, .proj-med, .proj-split, .contact-inner { grid-template-columns: minmax(0, 1fr); gap: 48px; }
   .hero { padding: 120px 0 60px; }
   .hero-inner { padding-left: 6%; }
   .story-grid { grid-template-columns: 1fr 1fr; }
@@ -447,7 +451,9 @@ footer { border-top: 1px solid var(--border); padding: 44px 0; }
   .hero-scrim { display: none; }
   .hero-bg { position: relative; inset: auto; width: 100%; height: 52vh; margin-top: 50px; transform: none !important; }
   .hero-portrait { position: relative; top: auto; right: auto; left: 0; width: 100%; height: 52vh; object-position: 22% 18%; mask-image: linear-gradient(180deg, #000 68%, transparent 100%); -webkit-mask-image: linear-gradient(180deg, #000 68%, transparent 100%); }
-  .hero-inner { width: 100%; max-width: none; margin: 0; padding: 24px 0 0; }
+  /* keep the same 22px side gutter the rest of the mobile page uses, so
+     no hero copy sits against the screen edge */
+  .hero-inner { width: 100%; max-width: none; margin: 0; padding: 24px 22px 0; }
   .hero-name { color: var(--ink); }
   .hero h1 { color: var(--ink); }
   .hero h1 em { color: var(--accent); }
@@ -460,7 +466,7 @@ footer { border-top: 1px solid var(--border); padding: 44px 0; }
   .hero-facts { border-top-color: var(--border); }
   .hero-fact { color: var(--ink2); }
   .hero-actions { gap: 20px; }
-  .hero-facts { gap: 12px 24px; }
+  .hero-facts { gap: 12px 24px; justify-content: center; }
   .hero h1 { font-size: clamp(38px, 11vw, 58px); }
   .tl-item { grid-template-columns: 1fr; gap: 10px; }
   .story-grid { grid-template-columns: 1fr; }
@@ -469,43 +475,100 @@ footer { border-top: 1px solid var(--border); padding: 44px 0; }
   .web-sub + .web-sub, .web-grid + .web-sub { margin-top: 52px; }
   .proj { padding: 70px 0; }
   .vulcan-panel { min-height: 0; padding: 32px 26px; }
-  .years-number { font-size: 34vw; }
+  /* "YEARS" is a single unbreakable word ~2.8em wide, so a plain 34vw (which
+     assumes the full viewport) pushes it past the 22px-padded column and
+     .years' overflow:hidden clips the tail. Cap the size to the real column
+     width, with ~3% headroom for font-metric variance. */
+  .years-number { font-size: min(34vw, calc((100vw - 44px) / 2.9)); }
   .to-top { right: 18px; bottom: 18px; width: 44px; height: 44px; }
 
   /* ---------------- MOBILE PROJECT COMPOSITION ----------------
-     Keeps each project visual and its text bound together instead of
-     text-then-full-width-image. Media leads; the copy block overlaps
-     upward onto it as a card. Same tokens as the desktop system. */
-  .proj-baya, .proj-neche, .proj-vulcan, .proj-med, .proj-split { gap: 0; }
-  .proj-media, .vulcan-panel { order: -1; }
-  .proj-copy {
-    position: relative; z-index: 2;
-    margin-top: -24px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 24px 22px 26px;
+     One composition per project: the shot fills the entire block and the
+     copy sits on top of it. No separate white text panel stacked above or
+     below the image, and the image is no longer a small picture with a
+     text block underneath. Same tokens, type, spacing and cover/top
+     image treatment as the desktop system - only the stacking changes.
+
+     --proj-clear is the band at the top left uncovered so the screenshot
+     still reads as a screenshot; --proj-fade is the ramp from there to a
+     firm cream wash. The wash has to be this strong: the existing dark
+     body copy is 15px, and the darkest pixels inside these captures are
+     near-black, so anything lighter drops it under 4.5:1. */
+  .proj-baya, .proj-neche, .proj-vulcan, .proj-med, .proj-split {
+    --proj-clear: clamp(148px, 42vw, 206px);
+    --proj-fade: 116px;
+    display: block;
+    position: relative;
+    gap: 0;
   }
-  /* screenshots stay large and recognisable, never a full-height block */
-  .proj-media .pm-frame { aspect-ratio: 16 / 10; }
-  .proj-media .pm-frame img { height: 100%; object-fit: cover; object-position: top center; }
-  .proj-media.pm-sq .pm-frame { aspect-ratio: 1 / 1; }
-  .proj-media > img.proj-shot { width: 100%; max-height: 58vw; object-fit: cover; object-position: top center; }
-  .proj-media.pm-sq > img.proj-shot { max-height: 84vw; }
-  /* the copy card overlaps the bottom of the media, so the caption row
-     moves above the shot on mobile - otherwise it gets covered up */
-  .proj-media { display: flex; flex-direction: column; }
-  .proj-media .pm-note { order: -1; border-top: 0; border-bottom: 1px solid var(--border); }
-  .vulcan-panel { padding: 26px 20px; }
+  /* the visual becomes the background layer of the whole composition */
+  .proj-media, .vulcan-panel {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: var(--radius);
+  }
+  /* rgba() here is --bg (#faf8f5) */
+  .proj-media::after, .vulcan-panel::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(180deg,
+      rgba(250,248,245,0) 0,
+      rgba(250,248,245,0) var(--proj-clear),
+      rgba(250,248,245,.90) calc(var(--proj-clear) + var(--proj-fade)),
+      rgba(250,248,245,.92) 100%);
+  }
+  .vulcan-panel { padding: 30px 22px; min-height: 0; justify-content: flex-start; }
+  .vulcan-panel > * { position: relative; z-index: 2; }
   .vulcan-panel .vp-step { grid-template-columns: 30px 1fr; gap: 12px; }
   .vulcan-panel .vp-step + .vp-step { padding-top: 15px; margin-top: 15px; }
+
+  /* the shot fills the composition; existing cover + top treatment kept */
+  .proj-media { display: flex; flex-direction: column; background: var(--card); }
+  .proj-media .pm-frame, .proj-media > img.proj-shot {
+    flex: 1 1 auto;
+    min-height: 0;
+    aspect-ratio: auto;
+    max-height: none;
+  }
+  .proj-media .pm-frame img, .proj-media > img.proj-shot {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+  }
+  /* the caption moves to the foot of the composition instead of
+     forming a solid bar above the shot */
+  .proj-media .pm-note {
+    order: 0;
+    flex: 0 0 auto;
+    background: none;
+    border: 0;
+    color: var(--muted);
+    padding: 12px 20px 14px;
+  }
+  /* the copy is the only in-flow child, so it sets the composition
+     height and the visual stretches to match. It starts below the clear
+     band, and the deep bottom padding leaves the caption its own space. */
+  .proj-copy {
+    position: relative;
+    z-index: 2;
+    margin-top: 0;
+    background: none;
+    border: 0;
+    border-radius: 0;
+    padding: calc(var(--proj-clear) + var(--proj-fade) + 26px) 22px 72px;
+  }
 }
 
 @media (max-width: 560px) {
   /* ---------------- SMALL-SCREEN TYPE + SPACING ----------------
      Individually tuned rather than uniformly scaled down. */
   .proj { padding: 52px 0; }
-  .proj-copy { margin-top: -20px; padding: 20px 18px 22px; border-radius: 14px; }
+  .proj-copy { padding: calc(var(--proj-clear) + var(--proj-fade) + 22px) 18px 68px; }
   .proj h3 { font-size: clamp(27px, 8.2vw, 32px); margin-bottom: 14px; }
   .proj-tag { font-size: 10.5px; letter-spacing: 1.2px; margin-bottom: 10px; }
   .proj-meta { font-size: 12.5px; margin-bottom: 13px; }
