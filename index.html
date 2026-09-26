@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -100,9 +100,9 @@ nav.solid .nav-logo .brand-name span { color: var(--muted); }
 .nav-links a:not(.nav-cta) { font-size: 14px; font-weight: 500; color: var(--ink); text-decoration: none; transition: color .2s; }
 .nav-links a:not(.nav-cta):hover { color: var(--accent); }
 .nav-cta {
-  font-size: 13px; font-weight: 600; color: #fff;
-  background: var(--accent); padding: 10px 18px; border-radius: 999px;
-  text-decoration: none; transition: background .2s, transform .2s;
+  font-family: inherit; font-size: 13px; font-weight: 600; line-height: 1.6; color: #fff;
+  background: var(--accent); padding: 10px 18px; border: 0; border-radius: 999px;
+  text-decoration: none; cursor: pointer; transition: background .2s, transform .2s;
 }
 .nav-cta:hover { background: var(--accent-strong); transform: translateY(-1px); }
 .nav-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: 0; padding: 6px; }
@@ -154,7 +154,6 @@ nav.solid .nav-logo .brand-name span { color: var(--muted); }
 /* Layer 3 - content: a right-aligned block over the darker zone of the photo */
 .hero-inner { position: relative; z-index: 2; width: 100%; max-width: none; margin: 0; padding: 40px 0 40px 6%; }
 .hero-name { font-family: var(--serif-display); font-size: clamp(14px, 1.6vw, 18px); font-weight: 600; color: #ffffff; margin-bottom: 22px; display: flex; align-items: center; gap: 12px; }
-.hero-name::before { content:""; width: 9px; height: 9px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 5px rgba(26,67,137,0.35); }
 .hero h1 { font-size: clamp(46px, 6.8vw, 96px); font-weight: 700; line-height: 0.98; letter-spacing: -0.035em; max-width: 14ch; color: #ffffff; }
 .hero h1 em { font-style: normal; color: #7fa7e8; }
 .hero-statement { font-size: clamp(16.5px, 1.7vw, 20px); color: rgba(255,255,255,0.86); max-width: 58ch; margin-top: 28px; line-height: 1.7; font-weight: 300; }
@@ -206,7 +205,8 @@ nav.solid .nav-logo .brand-name span { color: var(--muted); }
 .tl-item { display: grid; grid-template-columns: 150px 1fr; gap: 40px; padding: 36px 0; border-top: 1px solid var(--border); position: relative; }
 .tl-item:first-child { border-top: none; }
 .tl-when { font-family: var(--serif-display); font-size: 15px; font-weight: 600; color: var(--ink2); letter-spacing: 0.2px; padding-top: 4px; }
-.tl-when .dot-current { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); margin-right: 10px; vertical-align: 1px; }
+  .tl-when .dot-current { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); margin-right: 10px; vertical-align: 1px; }
+  .tl-when .arrow-current { color: var(--accent); font-weight: 500; margin-right: 8px; }
 .tl-body h4 { font-size: 23px; font-weight: 600; margin-bottom: 6px; }
 .tl-body .tl-role { font-size: 13.5px; color: var(--accent); font-weight: 500; letter-spacing: 0.3px; margin-bottom: 12px; }
 .tl-body p { color: var(--ink2); font-weight: 300; font-size: 15.5px; line-height: 1.75; }
@@ -290,6 +290,28 @@ nav.solid .nav-logo .brand-name span { color: var(--muted); }
 .story-card .st-num { font-family: var(--serif-display); font-size: 13px; font-weight: 600; color: var(--accent); letter-spacing: 1px; }
 .story-card h4 { font-size: 19px; font-weight: 600; margin: 16px 0 10px; }
 .story-card p { color: var(--ink2); font-weight: 300; font-size: 14.5px; line-height: 1.7; }
+.story-grid.four { grid-template-columns: repeat(4, 1fr); }
+
+/* ---------------- WEBSITES GALLERY ---------------- */
+/* Tiles reuse the project-image language: same border, radius, caption bar and
+   hover scale as .proj-media, so the gallery reads as part of the same system. */
+.web-sub { margin-bottom: 30px; }
+.web-sub .eyebrow { display: block; margin-bottom: 10px; }
+.web-sub h3 { font-size: clamp(21px, 2.3vw, 28px); font-weight: 600; letter-spacing: -0.02em; }
+.web-sub p { margin-top: 10px; color: var(--ink2); font-weight: 300; font-size: 15.5px; line-height: 1.7; max-width: 58ch; }
+.web-sub + .web-sub, .web-grid + .web-sub { margin-top: 68px; }
+.web-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.web-tile { border: 1px solid var(--border); background: var(--card); border-radius: var(--radius); overflow: hidden; transition: border-color .2s, transform .2s; }
+.web-tile:hover { border-color: var(--border-strong); transform: translateY(-4px); }
+.web-tile .wt-shot { display: block; overflow: hidden; background: var(--bg-soft); aspect-ratio: 16/10; }
+.web-tile .wt-shot img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.001); transition: transform .6s cubic-bezier(.16,1,.3,1); }
+.web-tile:hover .wt-shot img { transform: scale(1.035); }
+.web-tile .wt-cap { padding: 15px 18px; display: flex; align-items: baseline; justify-content: space-between; gap: 14px; border-top: 1px solid var(--border); }
+.web-tile .wt-name { font-family: var(--serif-display); font-size: 15.5px; font-weight: 600; letter-spacing: -0.01em; }
+.web-tile .wt-kind { font-size: 10.5px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+
+/* Split layout reused by the additional main projects */
+.proj-split { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
 
 /* ---------------- ABOUT ---------------- */
 .about-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 64px; align-items: start; }
@@ -318,13 +340,66 @@ nav.solid .nav-logo .brand-name span { color: var(--muted); }
 .contact-link .cl-arrow { color: #7c8794; transition: transform .2s, color .2s; margin-left: auto; }
 .contact-link:hover .cl-arrow { color: var(--bg); transform: translateX(4px); }
 
+/* ---------------- CONTACT MODAL ----------------
+   Reuses the existing card + pill language: card white, 1px --border,
+   --radius, accent pill, and the same soft --dark shadow as the media cards. */
+.modal-backdrop {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(15,20,26,0.55);
+  backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transition: opacity .25s ease, visibility 0s linear .25s;
+  overscroll-behavior: contain;
+}
+.modal-backdrop.open { opacity: 1; visibility: visible; pointer-events: auto; transition: opacity .25s ease, visibility 0s; }
+.modal {
+  position: relative;
+  width: 100%; max-width: 460px;
+  max-height: 90vh; max-height: calc(100dvh - 48px);
+  overflow-y: auto; overscroll-behavior: contain;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 40px 70px -40px rgba(15,20,26,0.55);
+  padding: 34px 32px 32px;
+  transform: translateY(14px) scale(.98);
+  transition: transform .25s cubic-bezier(.16,1,.3,1);
+}
+.modal-backdrop.open .modal { transform: none; }
+.modal-x {
+  position: absolute; top: 16px; right: 16px;
+  width: 38px; height: 38px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: none; border: 1px solid var(--border); color: var(--ink2);
+  cursor: pointer; padding: 0; transition: background .2s, color .2s, border-color .2s;
+}
+.modal-x svg { width: 16px; height: 16px; }
+.modal-x:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+.modal h2 { font-family: var(--serif-display); font-size: 25px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; padding-right: 44px; }
+.modal-list { margin-top: 22px; display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+.modal-link { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-bottom: 1px solid var(--border); text-decoration: none; transition: background .2s; }
+.modal-link:last-child { border-bottom: none; }
+.modal-link:hover { background: var(--card-hover); }
+.modal-link:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; background: var(--card-hover); }
+.modal-link .ml-ico { width: 36px; height: 36px; border-radius: 10px; background: var(--accent-soft); border: 1px solid var(--accent-border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.modal-link .ml-ico svg { width: 17px; height: 17px; color: var(--accent); }
+.modal-link .ml-body { min-width: 0; }
+.modal-link .ml-label { display: block; font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted); }
+.modal-link .ml-value { display: block; font-size: 14.5px; color: var(--ink); font-weight: 500; margin-top: 2px; word-break: break-word; }
+.modal-link .ml-arrow { color: var(--muted); margin-left: auto; padding-left: 10px; transition: transform .2s, color .2s; }
+.modal-link:hover .ml-arrow { color: var(--accent); transform: translateX(4px); }
+body.modal-open { overflow: hidden; }
+html.modal-open { overflow: hidden; }
+
 /* ---------------- FOOTER ---------------- */
 footer { border-top: 1px solid var(--border); padding: 44px 0; }
 .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
 .footer-brand { display: flex; align-items: center; gap: 10px; }
 .footer-brand img { width: 26px; height: 26px; border-radius: 6px; }
 .footer-brand span { font-size: 13.5px; color: var(--ink2); font-weight: 500; }
-.footer-links { display: flex; gap: 24px; }
+  .footer-links { display: flex; flex-wrap: wrap; gap: 24px; }
 .footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color .2s; }
 .footer-links a:hover { color: var(--accent); }
 .footer-copy { margin-top: 14px; font-size: 12.5px; color: var(--muted); }
@@ -351,10 +426,12 @@ footer { border-top: 1px solid var(--border); padding: 44px 0; }
 
 /* ---------------- RESPONSIVE ---------------- */
 @media (max-width: 960px) {
-  .hero-inner, .years-inner, .proj-baya, .proj-neche, .proj-vulcan, .proj-med, .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+  .hero-inner, .years-inner, .proj-baya, .proj-neche, .proj-vulcan, .proj-med, .proj-split, .contact-inner { grid-template-columns: 1fr; gap: 48px; }
   .hero { padding: 120px 0 60px; }
   .hero-inner { padding-left: 6%; }
   .story-grid { grid-template-columns: 1fr 1fr; }
+  .story-grid.four { grid-template-columns: 1fr 1fr; }
+  .web-grid { grid-template-columns: 1fr 1fr; }
   .about-grid { grid-template-columns: 1fr; gap: 44px; }
 }
 
@@ -387,10 +464,85 @@ footer { border-top: 1px solid var(--border); padding: 44px 0; }
   .hero h1 { font-size: clamp(38px, 11vw, 58px); }
   .tl-item { grid-template-columns: 1fr; gap: 10px; }
   .story-grid { grid-template-columns: 1fr; }
+  .story-grid.four { grid-template-columns: 1fr; }
+  .web-grid { grid-template-columns: 1fr; }
+  .web-sub + .web-sub, .web-grid + .web-sub { margin-top: 52px; }
   .proj { padding: 70px 0; }
   .vulcan-panel { min-height: 0; padding: 32px 26px; }
   .years-number { font-size: 34vw; }
   .to-top { right: 18px; bottom: 18px; width: 44px; height: 44px; }
+
+  /* ---------------- MOBILE PROJECT COMPOSITION ----------------
+     Keeps each project visual and its text bound together instead of
+     text-then-full-width-image. Media leads; the copy block overlaps
+     upward onto it as a card. Same tokens as the desktop system. */
+  .proj-baya, .proj-neche, .proj-vulcan, .proj-med, .proj-split { gap: 0; }
+  .proj-media, .vulcan-panel { order: -1; }
+  .proj-copy {
+    position: relative; z-index: 2;
+    margin-top: -24px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px 22px 26px;
+  }
+  /* screenshots stay large and recognisable, never a full-height block */
+  .proj-media .pm-frame { aspect-ratio: 16 / 10; }
+  .proj-media .pm-frame img { height: 100%; object-fit: cover; object-position: top center; }
+  .proj-media.pm-sq .pm-frame { aspect-ratio: 1 / 1; }
+  .proj-media > img.proj-shot { width: 100%; max-height: 58vw; object-fit: cover; object-position: top center; }
+  .proj-media.pm-sq > img.proj-shot { max-height: 84vw; }
+  /* the copy card overlaps the bottom of the media, so the caption row
+     moves above the shot on mobile - otherwise it gets covered up */
+  .proj-media { display: flex; flex-direction: column; }
+  .proj-media .pm-note { order: -1; border-top: 0; border-bottom: 1px solid var(--border); }
+  .vulcan-panel { padding: 26px 20px; }
+  .vulcan-panel .vp-step { grid-template-columns: 30px 1fr; gap: 12px; }
+  .vulcan-panel .vp-step + .vp-step { padding-top: 15px; margin-top: 15px; }
+}
+
+@media (max-width: 560px) {
+  /* ---------------- SMALL-SCREEN TYPE + SPACING ----------------
+     Individually tuned rather than uniformly scaled down. */
+  .proj { padding: 52px 0; }
+  .proj-copy { margin-top: -20px; padding: 20px 18px 22px; border-radius: 14px; }
+  .proj h3 { font-size: clamp(27px, 8.2vw, 32px); margin-bottom: 14px; }
+  .proj-tag { font-size: 10.5px; letter-spacing: 1.2px; margin-bottom: 10px; }
+  .proj-meta { font-size: 12.5px; margin-bottom: 13px; }
+  .proj-desc { font-size: 15.5px; line-height: 1.72; margin-bottom: 18px; }
+  .proj-features { gap: 10px; margin-bottom: 22px; }
+  .proj-features li { font-size: 14.5px; gap: 10px; }
+  .proj-tech { gap: 7px; margin-bottom: 24px; }
+  .proj-link { padding: 11px 16px; font-size: 13.5px; gap: 7px; }
+  .proj-links { gap: 10px; }
+  .proj-media .pm-note { padding: 12px 15px; font-size: 11.5px; }
+  .vulcan-panel { padding: 22px 17px; }
+  .vulcan-panel .vp-head .vp-name { font-size: 18px; }
+  .vp-step .vs-desc { font-size: 12.5px; }
+
+  /* gallery: one column, but still an exhibition - not thumbnails */
+  .web-grid { gap: 18px; }
+  .web-tile .wt-shot { aspect-ratio: 16 / 10; }
+  .web-tile .wt-cap { padding: 13px 15px; gap: 10px; }
+  .web-tile .wt-name { font-size: 15px; }
+  .web-tile .wt-kind { font-size: 11px; letter-spacing: 1px; }
+
+  /* hero: keep the statement compact and readable, not oversized */
+  .hero h1 { font-size: clamp(34px, 10.4vw, 46px); max-width: 15ch; }
+  .hero-statement { font-size: 16px; margin-top: 20px; }
+  .hero-actions { gap: 12px; margin-top: 26px; }
+  .hero-facts { gap: 10px 18px; }
+  .contact-link { padding: 15px 16px; }
+
+  /* contact modal: comfortable padding, nothing clipped, no overflow */
+  .modal-backdrop { padding: 16px; }
+  .modal { padding: 30px 20px 24px; max-height: calc(100vh - 32px); max-height: calc(100dvh - 32px); }
+  .modal h2 { font-size: 22px; padding-right: 40px; }
+  .modal-list { margin-top: 18px; }
+  .modal-link { padding: 13px 14px; gap: 12px; }
+  .modal-link .ml-ico { width: 34px; height: 34px; }
+  .modal-link .ml-ico svg { width: 16px; height: 16px; }
+  .modal-link .ml-value { font-size: 14px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -399,6 +551,8 @@ footer { border-top: 1px solid var(--border); padding: 44px 0; }
   .r { opacity: 1 !important; transform: none !important; transition: none !important; }
   .proj-media img, .vulcan-panel, .proj { transition: none; }
   .to-top { transition: opacity .2s; }
+  .modal-backdrop, .modal { transition: none; }
+  .modal { transform: none; }
 }
 </style>
 <base target="_blank">
@@ -417,10 +571,11 @@ footer { border-top: 1px solid var(--border); padding: 44px 0; }
     </button>
     <div class="nav-links" id="navlinks">
       <a href="#work" target="_self">Work</a>
+      <a href="#websites" target="_self">Websites</a>
       <a href="#history" target="_self">History</a>
       <a href="#journey" target="_self">Experience</a>
       <a href="#about" target="_self">About</a>
-      <a href="#contact" target="_self" class="nav-cta">Let's talk</a>
+      <button type="button" class="nav-cta" id="talkBtn" aria-haspopup="dialog" aria-controls="contactModal" aria-expanded="false">Let's talk</button>
     </div>
   </div>
 </nav>
@@ -498,13 +653,14 @@ footer { border-top: 1px solid var(--border); padding: 44px 0; }
         </div>
       </div>
       <div class="tl-item r">
-        <div class="tl-when"><span class="dot-current"></span>2026</div>
+        <div class="tl-when"><span class="arrow-current">&rarr;</span>2026</div>
         <div class="tl-body">
           <h4>Building full products</h4>
           <div class="tl-role">Building today</div>
           <p>
-            Now it's complete projects end to end - BAYA, Vulcan, NecheBall and MedTrack - not just experiments,
-            but things I use and am still improving.
+            Alongside those, a set of artist websites, each built around its own artist, and storefront work. Complete
+            projects end to end - BAYA, Vulcan, NecheBall and MedTrack - not just experiments, but things I use and am
+            still improving.
           </p>
         </div>
       </div>
@@ -546,12 +702,12 @@ footer { border-top: 1px solid var(--border); padding: 44px 0; }
           <span class="tech-tag">Brand</span>
         </div>
         <div class="proj-links">
-          <a class="proj-link proj-cta" href="https://shopbaya.name.ng/" rel="noopener">View project <span class="arr">↗</span></a>
-          <a class="proj-link gh" href="https://www.linkedin.com/in/chinecherem-nwabufo-443401325" rel="noopener">Founder story</a>
+          <a class="proj-link proj-cta" href="https://shopbaya.name.ng/" rel="noopener noreferrer" target="_blank">View project <span class="arr">↗</span></a>
+          <a class="proj-link gh" href="https://www.linkedin.com/in/chinecherem-nwabufo-443401325" rel="noopener noreferrer" target="_blank">Founder story</a>
         </div>
       </div>
       <div class="proj-media pm-wide r r-d1">
-        <a class="pm-frame" href="https://shopbaya.name.ng/" rel="noopener" aria-label="Open BAYA">
+        <a class="pm-frame" href="https://shopbaya.name.ng/" rel="noopener noreferrer" aria-label="Open BAYA" target="_blank">
           <img class="proj-shot" src="./Assets/images/BAYA Screenshot.png" alt="BAYA marketplace - student-powered campus buying and selling" data-fallback="BAYA|Student marketplace built for university communities">
         </a>
         <div class="pm-note"><span>Live · shopbaya.name.ng</span><span class="arr">↗</span></div>
@@ -562,29 +718,31 @@ footer { border-top: 1px solid var(--border); padding: 44px 0; }
     <article class="proj proj-med r">
       <div class="proj-copy">
         <span class="proj-tag">Internship project</span>
-        <div class="proj-meta"><span>Health tracker</span><span class="sep"></span><span class="year">2025</span></div>
+        <div class="proj-meta"><span>Health tracker</span><span class="sep"></span><span class="year">2026</span></div>
         <h3>MedTrack</h3>
         <p class="proj-desc">
-          MedTrack is a <strong>medication adherence tracker</strong> I built during my engineering internship at
-          <strong>APIN Public Health Initiatives</strong>. I set up the full-stack architecture - a React frontend, a
-          Node/Express API and a Supabase database - and designed it around helping patients stay on schedule, with a
-          family member able to keep an eye on adherence.
+          MedTrack is a <strong>medication management product</strong> I built during my engineering internship at
+          <strong>APIN Public Health Initiatives</strong>. The problem it addresses is simple and real: prescriptions
+          are handed over once, and then nobody can see whether they are actually being taken. I designed it around
+          two roles - the <strong>patient</strong>, who schedules and logs doses, and a <strong>caregiver</strong>, who
+          can be invited to follow adherence. I set up the full-stack architecture and the data model behind it.
         </p>
         <ul class="proj-features">
-          <li>Full-stack setup - React (Vite) client, Express API, Supabase schema</li>
-          <li>Database models patients, medications, dose schedules and adherence logs</li>
-          <li>Domain designed around taken / skipped / snoozed logging and patient ↔ caregiver links</li>
-          <li>Wireframes and ER diagram documented in <em>docs/</em></li>
+          <li>Full-stack build - React (Vite) client with routing, Express API, PostgreSQL schema</li>
+          <li>Patient and caregiver roles, with OTP verification and JWT/bcrypt auth</li>
+          <li>Dose logging for taken / skipped / snoozed, plus adherence tracking over time</li>
+          <li>Caregiver invites, medication schedules and reminders, installable as a PWA</li>
         </ul>
         <div class="proj-tech">
           <span class="tech-tag">React</span>
           <span class="tech-tag">Node.js / Express</span>
-          <span class="tech-tag">Supabase</span>
+          <span class="tech-tag">PostgreSQL</span>
           <span class="tech-tag">JWT auth</span>
-          <span class="tech-tag">Vite</span>
+          <span class="tech-tag">PWA</span>
         </div>
         <div class="proj-links">
-          <a class="proj-link proj-cta" href="https://github.com/itzkennedy/medtrack" rel="noopener">View project <span class="arr">↗</span></a>
+          <a class="proj-link proj-cta" href="https://medtrack-three-coral.vercel.app" rel="noopener noreferrer" target="_blank">Live demo <span class="arr">↗</span></a>
+          <a class="proj-link gh" href="https://github.com/itzkennedy/medtrack" rel="noopener noreferrer" target="_blank">GitHub</a>
         </div>
       </div>
       <div class="proj-media pm-wide r r-d1">
@@ -599,27 +757,28 @@ footer { border-top: 1px solid var(--border); padding: 44px 0; }
         <div class="proj-meta"><span class="year">Developer tool</span><span class="sep"></span><span class="year">2026</span></div>
         <h3>Vulcan</h3>
         <p class="proj-desc">
-          Vulcan is an <strong>AI coding agent</strong> built in Python and TypeScript - a tool that takes an
-          instruction in plain language, reads the code in a project, and works with it to
-          <strong>generate, modify or debug</strong> that code. It scans codebases for bugs, exposed secrets and
-          missing error handling, then auto-fixes them. It runs offline (Ollama) or online (DeepSeek) with
-          automatic fallback.
+          Vulcan is an <strong>AI coding agent</strong> written in Python - a command-line tool you point at a project
+          and give a plain-language instruction. It reads the code, works out what needs to change, and then
+          <strong>generates, modifies or debugs</strong> it across the codebase rather than one file at a time. Before
+          touching anything it scans for exposed secrets, bugs and unfinished work, so you know what you are dealing
+          with.
         </p>
         <ul class="proj-features">
-          <li>Built around a scanner → fixer → agent pipeline of Python modules</li>
-          <li>Detects bugs, exposed secrets and missing error handling, then fixes them</li>
-          <li>Offline (Ollama) or online (DeepSeek) with automatic fallback</li>
-          <li>Packaged as a VS Code extension, with a file-protection vault and loop-detection safeguard</li>
+          <li>Scan → fix → agent pipeline, built as seven focused Python modules</li>
+          <li>Audits a codebase for bugs, hardcoded secrets and TODOs, then applies corrections</li>
+          <li>Runs fully offline against a local model (Ollama) or online via an API, with automatic fallback</li>
+          <li>Protects you while it works - a file vault with backups and a loop guard against runaway edits</li>
+          <li>Writes a report at the end so you can see exactly what changed and why</li>
         </ul>
         <div class="proj-tech">
           <span class="tech-tag">Python</span>
-          <span class="tech-tag">TypeScript</span>
+          <span class="tech-tag">CLI</span>
           <span class="tech-tag">LLM / AI agents</span>
-          <span class="tech-tag">Ollama / DeepSeek</span>
-          <span class="tech-tag">VS Code extension</span>
+          <span class="tech-tag">Ollama / API</span>
+          <span class="tech-tag">Static analysis</span>
         </div>
         <div class="proj-links">
-          <a class="proj-link proj-cta" href="https://github.com/itzkennedy/vulcan" rel="noopener">View project <span class="arr">↗</span></a>
+          <a class="proj-link proj-cta" href="https://github.com/itzkennedy/vulcan" rel="noopener noreferrer" target="_blank">View project <span class="arr">↗</span></a>
         </div>
       </div>
       <div class="vulcan-panel r r-d1" aria-hidden="true">
@@ -650,7 +809,7 @@ footer { border-top: 1px solid var(--border); padding: 44px 0; }
             </div>
           </div>
         </div>
-        <div class="vp-foot">Offline (Ollama) or online (DeepSeek) - with automatic fallback.</div>
+          <div class="vp-foot">Offline (Ollama) or online via an API - with automatic fallback.</div>
       </div>
     </article>
 
@@ -679,21 +838,85 @@ footer { border-top: 1px solid var(--border); padding: 44px 0; }
           <span class="tech-tag">Canvas</span>
         </div>
         <div class="proj-links">
-          <a class="proj-link proj-cta" href="https://necheball.vercel.app/" rel="noopener">View project <span class="arr">↗</span></a>
-          <a class="proj-link gh" href="https://github.com/itzkennedy/necheball" rel="noopener">GitHub ↗</a>
+          <a class="proj-link proj-cta" href="https://necheball.vercel.app/" rel="noopener noreferrer" target="_blank">View project <span class="arr">↗</span></a>
+          <a class="proj-link gh" href="https://github.com/itzkennedy/necheball" rel="noopener noreferrer" target="_blank">GitHub ↗</a>
         </div>
       </div>
       <div class="proj-media pm-sq r">
-        <a class="pm-frame" href="https://necheball.vercel.app/" rel="noopener" aria-label="Open NecheBall">
-          <img class="proj-shot sq" src="./Assets/images/necheball.png" alt="NecheBall - football formation and tactics board" data-fallback="NecheBall|Football tactics board">
+        <a class="pm-frame" href="https://necheball.vercel.app/" rel="noopener noreferrer" aria-label="Open NecheBall" target="_blank">
+          <img class="proj-shot sq" src="./Assets/images/necheball.webp" alt="NecheBall - football formation and tactics board" data-fallback="NecheBall|Football tactics board">
         </a>
         <div class="pm-note"><span>necheball.vercel.app</span><span style="color:var(--accent);font-weight:600;">Shipped in one day</span></div>
       </div>
     </article>
+
+</section>
+
+<!-- WEBSITES GALLERY -->
+<section id="websites" class="section">
+  <div class="container">
+    <div class="section-head r">
+      <span class="eyebrow">Websites</span>
+      <h2>Sites I've <em>built.</em></h2>
+      <p>A visual index of the websites I've built - artist sites, a storefront and concept work.</p>
+    </div>
+
+    <div class="web-sub r">
+      <span class="eyebrow">Artist Websites</span>
+      <h3>Different artists, different identities.</h3>
+      <p>I developed the underlying website system and built each experience around the artist's own identity, visual language, content and needs.</p>
+    </div>
+    <div class="web-grid">
+      <div class="web-tile r">
+        <div class="wt-shot"><img src="./Assets/images/gallery-ar4.webp" alt="AR4 - artist website homepage" loading="lazy"></div>
+        <div class="wt-cap"><span class="wt-name">AR4</span><span class="wt-kind">Artist site</span></div>
+      </div>
+      <div class="web-tile r r-d1">
+        <div class="wt-shot"><img src="./Assets/images/gallery-reeplay.webp" alt="Reeplay - artist website homepage" loading="lazy"></div>
+        <div class="wt-cap"><span class="wt-name">Reeplay</span><span class="wt-kind">Artist site</span></div>
+      </div>
+      <div class="web-tile r r-d2">
+        <div class="wt-shot"><img src="./Assets/images/gallery-ogabbah.webp" alt="OG Abbah - artist website homepage" loading="lazy"></div>
+        <div class="wt-cap"><span class="wt-name">OG Abbah</span><span class="wt-kind">Artist site</span></div>
+      </div>
+      <div class="web-tile r">
+        <div class="wt-shot"><img src="./Assets/images/gallery-dxtiny.webp" alt="DXTINY - artist website homepage" loading="lazy"></div>
+        <div class="wt-cap"><span class="wt-name">DXTINY</span><span class="wt-kind">Artist site</span></div>
+      </div>
+      <div class="web-tile r r-d1">
+        <div class="wt-shot"><img src="./Assets/images/gallery-loxxy.webp" alt="Loxxy Lawrence - artist website homepage" loading="lazy"></div>
+        <div class="wt-cap"><span class="wt-name">Loxxy Lawrence</span><span class="wt-kind">Artist site</span></div>
+      </div>
+      <div class="web-tile r r-d2">
+        <div class="wt-shot"><img src="./Assets/images/gallery-juneyluv.webp" alt="Juney Luv - artist website homepage" loading="lazy"></div>
+        <div class="wt-cap"><span class="wt-name">Juney Luv</span><span class="wt-kind">Artist site</span></div>
+      </div>
+    </div>
+
+    <div class="web-sub r">
+      <span class="eyebrow">Other Websites</span>
+      <h3>Storefronts and concept work.</h3>
+      <p>Commercial builds and experiments outside the artist work - including a demo build and a concept site, labelled as such.</p>
+    </div>
+    <div class="web-grid">
+      <div class="web-tile r">
+        <div class="wt-shot"><img src="./Assets/images/gallery-restaurant.webp" alt="Demo Restaurant - demo restaurant website" loading="lazy"></div>
+        <div class="wt-cap"><span class="wt-name">Demo Restaurant</span><span class="wt-kind">Demo build</span></div>
+      </div>
+      <div class="web-tile r r-d1">
+        <div class="wt-shot"><img src="./Assets/images/gallery-scentsplus.webp" alt="The Scents Plus - fragrance storefront" loading="lazy"></div>
+        <div class="wt-cap"><span class="wt-name">The Scents Plus</span><span class="wt-kind">Storefront</span></div>
+      </div>
+      <div class="web-tile r r-d2">
+        <div class="wt-shot"><img src="./Assets/images/gallery-xquisite.webp" alt="Xquisite Couture - fashion concept website" loading="lazy"></div>
+        <div class="wt-cap"><span class="wt-name">Xquisite Couture</span><span class="wt-kind">Concept</span></div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- HOW I WORK / STORIES -->
-<section class="section">
+<section class="section alt">
   <div class="container">
     <div class="section-head r">
       <span class="eyebrow">How I work</span>
@@ -715,6 +938,39 @@ footer { border-top: 1px solid var(--border); padding: 44px 0; }
         <div class="st-num">03 - Build fast</div>
         <h4>Ship a working thing</h4>
         <p>I move from idea to a functional product quickly - NecheBall went from concept to a shipped, live tool in a day.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT I SOLVE -->
+<section class="section">
+  <div class="container">
+    <div class="section-head r">
+      <span class="eyebrow">What I solve</span>
+      <h2>The problems <em>behind the work.</em></h2>
+      <p>Most of what I've built started as somebody describing a problem, not a feature list. These are the ones I know how to take on.</p>
+    </div>
+    <div class="story-grid four">
+      <div class="story-card r">
+        <div class="st-num">01</div>
+        <h4>Digital presence</h4>
+        <p>A business needs to explain what it sells, quickly, and look like it can be trusted. I build sites that do that - clear structure, honest copy, and a design that fits the business instead of a template.</p>
+      </div>
+      <div class="story-card r r-d1">
+        <div class="st-num">02</div>
+        <h4>Customer journeys</h4>
+        <p>The gap between a visitor and a customer is where most businesses lose people. I build the paths that close it - storefronts, ordering flows, booking journeys - and remove the friction between 'interested' and 'done'.</p>
+      </div>
+      <div class="story-card r r-d2">
+        <div class="st-num">03</div>
+        <h4>Products</h4>
+        <p>An idea in a document is not a product. I turn ideas into working web applications - real data, real logic, real edge cases - so they can be used rather than just demonstrated.</p>
+      </div>
+      <div class="story-card r r-d3">
+        <div class="st-num">04</div>
+        <h4>Systems</h4>
+        <p>Repetitive work is usually a process problem. I build software and automation around the tasks that shouldn't need a person - scanning, checking, generating, notifying.</p>
       </div>
     </div>
   </div>
@@ -774,16 +1030,17 @@ footer { border-top: 1px solid var(--border); padding: 44px 0; }
         <div class="tl-when">Engineering<br>Internship</div>
         <div class="tl-body">
           <h4>APIN Public Health Initiatives</h4>
-          <div class="tl-role">Internship</div>
+          <div class="tl-role">Completed 25 September 2026</div>
           <p>
-            Built <strong>MedTrack</strong>, a medication adherence tracker, during my internship - setting up the
-            React + Node/Express + Supabase architecture, the database schema, and the wireframes and ER diagram. It's
-            designed around dose logging (taken / skipped / snoozed), adherence stats and a caregiver view.
+            Built <strong>MedTrack</strong>, a medication management product, during my internship - setting up the
+            React + Node/Express + PostgreSQL architecture and the data model behind it. It's designed around dose
+            logging (taken / skipped / snoozed), adherence tracking, medication reminders, and a caregiver view for
+            somebody keeping an eye on a patient.
           </p>
           <div class="tl-tags">
             <span class="tech-tag">React</span>
             <span class="tech-tag">Node.js / Express</span>
-            <span class="tech-tag">Supabase</span>
+            <span class="tech-tag">PostgreSQL</span>
           </div>
         </div>
       </div>
@@ -824,9 +1081,10 @@ footer { border-top: 1px solid var(--border); padding: 44px 0; }
         </p>
         <p>
           That's the mindset I bring everywhere. I don't collect technologies like badges - I use what's right for the
-          problem. So far that's meant a <strong>campus marketplace</strong>, an <strong>AI coding agent</strong>, a
-          <strong>football tactics board built in a day</strong>, and a <strong>medication tracker</strong> during my
-          internship.
+          problem. It started with websites: experiments first, then artist websites, each built around its own artist.
+          From there it moved into products - a <strong>football tactics board built in a day</strong>, a
+          <strong>medication tracker</strong> during my internship, an <strong>AI coding agent</strong>, and
+          <strong>BAYA</strong>, a campus marketplace I took from an idea to a live product.
         </p>
         <p>
           Deeply interested in <strong>automation, AI and systems</strong> - how to make products run themselves.
@@ -845,7 +1103,7 @@ footer { border-top: 1px solid var(--border); padding: 44px 0; }
         </div>
         <div class="stat-card r r-d2">
           <div class="sc-lbl">Currently</div>
-          <div class="sc-val">Building BAYA, an AI-powered product for freelancers, and finishing my degree.</div>
+          <div class="sc-val">Building BAYA, shipping websites and products, and finishing my degree.</div>
         </div>
       </div>
     </div>
@@ -864,20 +1122,20 @@ footer { border-top: 1px solid var(--border); padding: 44px 0; }
       </p>
       <p style="margin-top:18px; font-size:15px; color:#7c8794;">
         Building in public on
-        <a href="https://www.linkedin.com/in/chinecherem-nwabufo-443401325" rel="noopener" style="color:var(--accent); text-decoration:none;">LinkedIn</a>.
+        <a href="https://www.linkedin.com/in/chinecherem-nwabufo-443401325" rel="noopener noreferrer" style="color:var(--accent); text-decoration:none;" target="_blank">LinkedIn</a>.
       </p>
     </div>
     <div class="r r-d1">
       <div class="contact-list">
-        <a class="contact-link" href="mailto:nechecode@gmail.com" rel="noopener">
+        <a class="contact-link" href="mailto:nwabufokennedy@gmail.com" rel="noopener" target="_self">
           <span class="cl-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
           <span class="cl-body">
             <span class="cl-label">Email</span>
-            <span class="cl-value">nechecode@gmail.com</span>
+            <span class="cl-value">nwabufokennedy@gmail.com</span>
           </span>
           <span class="cl-arrow">→</span>
         </a>
-        <a class="contact-link" href="https://wa.me/2347012389126" rel="noopener">
+        <a class="contact-link" href="https://wa.me/2347012389126" rel="noopener noreferrer" target="_blank">
           <span class="cl-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
           <span class="cl-body">
             <span class="cl-label">WhatsApp</span>
@@ -885,7 +1143,7 @@ footer { border-top: 1px solid var(--border); padding: 44px 0; }
           </span>
           <span class="cl-arrow">→</span>
         </a>
-        <a class="contact-link" href="https://www.linkedin.com/in/chinecherem-nwabufo-443401325" rel="noopener">
+        <a class="contact-link" href="https://www.linkedin.com/in/chinecherem-nwabufo-443401325" rel="noopener noreferrer" target="_blank">
           <span class="cl-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></span>
           <span class="cl-body">
             <span class="cl-label">LinkedIn</span>
@@ -893,7 +1151,7 @@ footer { border-top: 1px solid var(--border); padding: 44px 0; }
           </span>
           <span class="cl-arrow">→</span>
         </a>
-        <a class="contact-link" href="https://github.com/itzkennedy" rel="noopener">
+        <a class="contact-link" href="https://github.com/itzkennedy" rel="noopener noreferrer" target="_blank">
           <span class="cl-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></span>
           <span class="cl-body">
             <span class="cl-label">GitHub</span>
@@ -901,7 +1159,7 @@ footer { border-top: 1px solid var(--border); padding: 44px 0; }
           </span>
           <span class="cl-arrow">→</span>
         </a>
-        <a class="contact-link" href="https://instagram.com/neche_kennedy" rel="noopener">
+        <a class="contact-link" href="https://www.instagram.com/neche_kennedy/" rel="noopener noreferrer" target="_blank">
           <span class="cl-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></span>
           <span class="cl-body">
             <span class="cl-label">Instagram</span>
@@ -917,12 +1175,13 @@ footer { border-top: 1px solid var(--border); padding: 44px 0; }
 <!-- FOOTER -->
 <footer>
   <div class="container footer-inner">
-    <div class="footer-brand">
+    <a class="footer-brand" href="https://www.instagram.com/neche_kennedy/" rel="noopener noreferrer" target="_blank">
       <img src="./Assets/nechecodes.PNG" alt="neche_codes logo">
       <span>Chinecherem Nwabufo</span>
-    </div>
+    </a>
     <div class="footer-links">
       <a href="#work" target="_self">Work</a>
+      <a href="#websites" target="_self">Websites</a>
       <a href="#history" target="_self">History</a>
       <a href="#journey" target="_self">Experience</a>
       <a href="#about" target="_self">About</a>
@@ -938,6 +1197,59 @@ footer { border-top: 1px solid var(--border); padding: 44px 0; }
 <button class="to-top" id="toTop" aria-label="Back to top">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
 </button>
+
+<!-- CONTACT MODAL -->
+<div class="modal-backdrop" id="contactModal" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
+    <button class="modal-x" id="contactModalClose" type="button" aria-label="Close contact details">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <span class="eyebrow">Contact</span>
+    <h2 id="contactModalTitle">Chinecherem Nwabufo</h2>
+    <div class="modal-list">
+      <a class="modal-link" href="mailto:nwabufokennedy@gmail.com" rel="noopener" target="_self">
+        <span class="ml-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+        <span class="ml-body">
+          <span class="ml-label">Email</span>
+          <span class="ml-value">nwabufokennedy@gmail.com</span>
+        </span>
+        <span class="ml-arrow">&rarr;</span>
+      </a>
+      <a class="modal-link" href="https://www.instagram.com/neche_kennedy/" rel="noopener noreferrer" target="_blank">
+        <span class="ml-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></span>
+        <span class="ml-body">
+          <span class="ml-label">Instagram</span>
+          <span class="ml-value">@neche_kennedy</span>
+        </span>
+        <span class="ml-arrow">&rarr;</span>
+      </a>
+      <a class="modal-link" href="https://www.linkedin.com/in/chinecherem-nwabufo-443401325" rel="noopener noreferrer" target="_blank">
+        <span class="ml-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></span>
+        <span class="ml-body">
+          <span class="ml-label">LinkedIn</span>
+          <span class="ml-value">Chinecherem Nwabufo</span>
+        </span>
+        <span class="ml-arrow">&rarr;</span>
+      </a>
+      <a class="modal-link" href="https://wa.me/2347012389126" rel="noopener noreferrer" target="_blank">
+        <span class="ml-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
+        <span class="ml-body">
+          <span class="ml-label">WhatsApp</span>
+          <span class="ml-value">Chat directly</span>
+        </span>
+        <span class="ml-arrow">&rarr;</span>
+      </a>
+      <a class="modal-link" href="https://github.com/itzkennedy" rel="noopener noreferrer" target="_blank">
+        <span class="ml-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></span>
+        <span class="ml-body">
+          <span class="ml-label">GitHub</span>
+          <span class="ml-value">itzkennedy</span>
+        </span>
+        <span class="ml-arrow">&rarr;</span>
+      </a>
+    </div>
+  </div>
+</div>
 
 <script>
 (function () {
@@ -1050,6 +1362,91 @@ footer { border-top: 1px solid var(--border); padding: 44px 0; }
   toTop.addEventListener('click', () => {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+  });
+
+  // ---------------- CONTACT MODAL ----------------
+  // Header "Let's talk" opens this instead of jumping to #contact.
+  // Same contact details as the #contact section - nothing invented.
+  const modal = document.getElementById('contactModal');
+  const modalPanel = modal.querySelector('.modal');
+  const talkBtn = document.getElementById('talkBtn');
+  const modalClose = document.getElementById('contactModalClose');
+  let lastFocused = null;
+
+  const isOpen = () => modal.classList.contains('open');
+
+  function lockScroll() {
+    // Reserve the scrollbar gutter so locking does not shift the page.
+    const gap = window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.paddingRight = gap > 0 ? gap + 'px' : '';
+    document.body.classList.add('modal-open');
+    document.documentElement.classList.add('modal-open');
+  }
+  function unlockScroll() {
+    document.body.classList.remove('modal-open');
+    document.documentElement.classList.remove('modal-open');
+    document.body.style.paddingRight = '';
+  }
+
+  function openModal() {
+    if (isOpen()) return;
+    const active = document.activeElement;
+    lastFocused = (active && active !== document.body && active !== document.documentElement) ? active : talkBtn;
+    if (navlinks.classList.contains('open')) {
+      navlinks.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+    }
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    talkBtn.setAttribute('aria-expanded', 'true');
+    lockScroll();
+    // let the dialog paint before moving focus into it
+    void modal.offsetHeight;
+    modalClose.focus();
+    requestAnimationFrame(function () {
+      if (isOpen() && !modal.contains(document.activeElement)) modalClose.focus();
+    });
+  }
+
+  function restoreFocus() {
+    const target = (lastFocused && lastFocused.isConnected) ? lastFocused : talkBtn;
+    // The trigger lives inside the collapsible nav, which is display:none on small
+    // screens once closed. A hidden trigger cannot take focus, so hand it to the
+    // burger that owns the nav instead of stranding focus on a hidden element.
+    const hidden = target !== document.body && target.offsetParent === null;
+    const fallback = getComputedStyle(burger).display !== 'none' ? burger : talkBtn;
+    const to = hidden ? fallback : target;
+    try { to.focus({ preventScroll: true }); } catch (e) { to.focus(); }
+  }
+
+  function closeModal() {
+    if (!isOpen()) return;
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    talkBtn.setAttribute('aria-expanded', 'false');
+    unlockScroll();
+    restoreFocus();
+  }
+
+  talkBtn.addEventListener('click', openModal);
+  modalClose.addEventListener('click', closeModal);
+
+  // Click on the backdrop (but not inside the panel) closes it.
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (!isOpen()) return;
+    if (e.key === 'Escape') { e.preventDefault(); closeModal(); return; }
+    if (e.key !== 'Tab') return;
+    // Keep focus inside the dialog while it is open.
+    const focusables = modalPanel.querySelectorAll('a[href], button');
+    if (!focusables.length) return;
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   });
 })();
 </script>
