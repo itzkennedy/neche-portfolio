@@ -1,0 +1,1057 @@
+/* ==========================================================================
+   Chinecherem Nwabufo - personal link hub
+   One page, one narrow column. Space Grotesk display, Inter text, #1A4389
+   accent, translucent cards over the photographic background. Mobile-first.
+   ========================================================================== */
+
+:root {
+  --card: #ffffff;
+  --border: #e5e0d8;
+  --border-strong: #d2cbc0;
+  --ink: #16191d;
+  /* Darker than the main site's --muted so small text clears AA on white. */
+  --muted: #5a616b;
+  --accent: #1A4389;
+  --accent-strong: #123061;
+  --radius: 16px;
+  --serif-display: 'Space Grotesk', sans-serif;
+  --sans: 'Inter', system-ui, -apple-system, sans-serif;
+  /* Narrow on purpose: a link hub stays a focused column at any width. */
+  --shell: 440px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  /* Containing block for .page-mark, so the watermark can span the whole
+     document rather than just one screen. This does not create a stacking
+     context, so the fixed .page-bg and .page-veil layers are unaffected. */
+  position: relative;
+  background: #0f141a;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  /* The background is deliberately overscaled; keep it from creating a scrollbar. */
+  overflow-x: hidden;
+}
+
+h1, h2 { font-family: var(--serif-display); letter-spacing: -0.02em; line-height: 1.18; margin: 0; }
+p { margin: 0; }
+ul { margin: 0; padding: 0; list-style: none; }
+a { color: inherit; text-decoration: none; }
+
+::selection { background: var(--accent); color: #fff; }
+
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+
+/* ---------- background ---------- */
+
+.page-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-image: url("../Assets/my%20image.PNG");
+  background-size: cover;
+  background-position: 50% 20%;
+  background-repeat: no-repeat;
+  background-color: #0b1016;
+  transform: scale(1.04);
+}
+
+/* The neche_codes mark, as a watermark split across the page: its top sits
+   behind the identity block at the top of the hub, and the rest runs down to
+   the footer. One image, not two, so the two halves line up as a single mark.
+   It is sized to the full document height and centred, which means the middle
+   of it falls in the empty gutter between the identity block and the footer
+   rather than over any content.
+
+   Absolutely positioned rather than fixed, because fixed would pin it to the
+   viewport and it would no longer reach the footer at the end of the scroll.
+   opacity is low on purpose: the photo and the text shadows already carry the
+   contrast, so this is texture, not content. */
+.page-mark {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 0;
+  /* 100% of the body, which is the document height. The extra 4px covers the
+     body margin, which collapses outside the body's own box and would
+     otherwise leave a gap under the footer on narrow viewports. */
+  height: calc(100% + 4px);
+  transform: translateX(-50%);
+  background-image: url("../Assets/nechecodes.PNG");
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+  background-size: auto 100%;
+  opacity: 0.09;
+  pointer-events: none;
+}
+
+/* Deliberately light. Measured gutter luminance was 0.003-0.13 with the
+   previous 0.40-0.60 range, which flattened the portrait to near-black.
+   Readability for the text that sits directly on the photo is handled by the
+   local scrim on .id and the text shadows, not by darkening the whole page. */
+.page-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(8, 12, 18, 0.30) 0%,
+    rgba(8, 12, 18, 0.13) 24%,
+    rgba(8, 12, 18, 0.12) 56%,
+    rgba(8, 12, 18, 0.26) 100%
+  );
+}
+
+.shell {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: var(--shell);
+  margin: 0 auto;
+  padding: 0 20px 40px;
+}
+
+/* ---------- identity ---------- */
+
+.id {
+  position: relative;
+  padding: 38px 0 30px;
+  text-align: center;
+}
+
+/* Local scrim for the identity block. The edge is deliberately visible: this
+   used to fade to fully transparent and read as a smudge on the photo, so the
+   gradient now terminates at a real alpha and a hairline ring closes the
+   shape. Horizontal inset stays at the shell's 20px padding, because a wider
+   value pushed this element past the viewport on mobile. */
+.id::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  /* 6px side pull-in keeps the ring inside the viewport on mobile. The old
+     -20px inset pushed the panel flush to the edges, so the side borders were
+     clipped off-screen and only the top and bottom showed. */
+  /* Top inset is +36px rather than negative, so the panel's top edge sits just
+     above the logo instead of floating ~68px above it over bare photo. Side
+     pull-in (6px) keeps the ring inside the viewport on mobile. */
+  inset: 36px 6px -24px;
+  border-radius: 26px;
+  /* Ends at 0.30, not 0, so there is a defined edge rather than a fade. */
+  background: radial-gradient(64% 60% at 50% 46%,
+    rgba(4, 7, 12, 0.86) 0%,
+    rgba(4, 7, 12, 0.74) 46%,
+    rgba(4, 7, 12, 0.52) 76%,
+    rgba(4, 7, 12, 0.30) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  pointer-events: none;
+}
+
+/* The logo is decorative here. The h1 and the role line already name the
+   person, so alt is empty to avoid a screen reader announcing it twice.
+   Intrinsic width/height stop layout shift while the 1MB PNG decodes; the
+   rendered size is set here. */
+.id-mark {
+  display: block;
+  width: 54px;
+  height: 54px;
+  /* The mark costs 70px of vertical space, so the space above it is trimmed to
+     pay for it. A link hub should stay close to one screen of scrolling. */
+  margin: 0 auto 12px;
+  object-fit: contain;
+  /* Same halo treatment as the name below it, so the mark keeps its edge
+     against the light veil rather than dissolving into the photo. */
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5)) drop-shadow(0 2px 18px rgba(0, 0, 0, 0.45));
+}
+
+.id-name {
+  font-size: clamp(30px, 8.4vw, 38px);
+  font-weight: 700;
+  color: #fff;
+  /* Tight dark halo carries the contrast on a now-light veil. */
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5), 0 2px 26px rgba(0, 0, 0, 0.5);
+}
+
+.id-role {
+  margin-top: 9px;
+  font-family: var(--serif-display);
+  font-size: clamp(15px, 4.1vw, 17px);
+  font-weight: 500;
+  color: #eaf0fa;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55), 0 1px 18px rgba(0, 0, 0, 0.6);
+}
+.id-role .amp { color: rgba(255, 255, 255, 0.8); }
+
+.id-blurb {
+  margin: 16px auto 0;
+  max-width: 34ch;
+  font-size: 15.5px;
+  line-height: 1.55;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6), 0 1px 16px rgba(0, 0, 0, 0.7), 0 0 28px rgba(0, 0, 0, 0.4);
+}
+
+.id-loc {
+  margin-top: 12px;
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6), 0 1px 14px rgba(0, 0, 0, 0.75), 0 0 30px rgba(0, 0, 0, 0.45);
+}
+
+/* ---------- portfolio: the one portfolio link ---------- */
+
+.portfolio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 60px;
+  padding: 17px 22px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  box-shadow: 0 10px 28px rgba(18, 48, 97, 0.3);
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+.portfolio:active { transform: translateY(1px); }
+.portfolio .ico-arrow { width: 19px; height: 19px; transition: transform 0.18s ease; }
+/* Every :hover rule in this file is guarded by @media (hover: hover) lower
+   down. An unguarded :hover is a real bug on touch screens: it latches onto
+   the last thing tapped and keeps the element looking selected until you tap
+   somewhere else. These focus-visible twins give keyboard users the same
+   affordance, and :focus-visible never latches. */
+.portfolio:focus-visible { background: var(--accent-strong); }
+.portfolio:focus-visible .ico-arrow { transform: translateX(4px); }
+
+.ico-arrow { flex: none; }
+
+/* ---------- groups ---------- */
+
+.group { margin-top: 34px; }
+
+.group-h {
+  display: inline-block;
+  margin-bottom: 14px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  /* 12px light text cannot clear AA on an exposed photograph at any font
+     size, and a light veil is what keeps the photo visible. A translucent
+     chip guarantees the contrast without darkening the page. */
+  background: rgba(8, 12, 18, 0.62);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.28);
+  /* Sits on the photograph, so light ink plus a stacked dark halo. */
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
+}
+
+.stack { display: flex; flex-direction: column; gap: 9px; }
+
+/* ---------- product rows ---------- */
+
+/* Glass surface. Light and translucent rather than opaque white, so the
+   photograph reads through the card and it stops looking like a block sitting
+   on top of the image. Alpha stays high enough that dark ink keeps AA contrast
+   over the brightest part of the photo. */
+.row {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 18px;
+  background: linear-gradient(180deg,
+    rgba(255, 255, 255, 0.76) 0%,
+    rgba(240, 246, 255, 0.60) 100%);
+  -webkit-backdrop-filter: blur(14px) saturate(1.15);
+  backdrop-filter: blur(14px) saturate(1.15);
+  box-shadow:
+    0 1px 2px rgba(15, 20, 26, 0.05),
+    0 10px 26px -14px rgba(15, 20, 26, 0.28);
+  transition: border-color 0.2s ease, transform 0.18s ease, box-shadow 0.2s ease;
+}
+/* Hover deliberately does NOT change the card background. The card is already
+   the white gradient it stays on: it should not shift shade when clicked.
+   Affordance is carried by the border tint and the small lift. */
+a.row:focus-visible {
+  border-color: rgba(26, 67, 137, 0.42);
+  transform: translateY(-2px);
+  box-shadow:
+    0 1px 2px rgba(15, 20, 26, 0.05),
+    0 16px 32px -16px rgba(15, 20, 26, 0.34);
+}
+a.row:active { transform: translateY(0); }
+
+.row-body { display: block; padding: 15px 16px 14px; }
+
+.row-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.row-title {
+  display: block;
+  font-family: var(--serif-display);
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+
+.row-desc {
+  display: block;
+  margin-top: 4px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.ico-row {
+  width: 18px;
+  height: 18px;
+  color: var(--accent);
+  opacity: 0.75;
+  transition: transform 0.18s ease, opacity 0.18s ease;
+}
+a.row:focus-visible .ico-row { transform: translateX(4px); opacity: 1; }
+.row-shot:focus-visible .ico-row { transform: translateX(4px); opacity: 1; }
+
+/* ---------- media strip at the foot of a product card ---------- */
+
+/* Belongs on the inner strip ONLY. Putting it on the card as well used to
+   override .row's white gradient with this 0.22 wash, because this rule comes
+   later in the file, so the card rendered flat grey at rest and only looked
+   white while hovered. The card is .row on its own. */
+.row-media {
+  display: block;
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.media-img {
+  display: block;
+  width: 100%;
+  height: 104px;
+  object-fit: cover;
+  object-position: 50% 32%;
+}
+
+/* Blueprint schematic. Structural, not illustrative: no invented screenshots.
+   Real project shots use .media-img, projects without an asset get this. */
+.blueprint {
+  display: block;
+  width: 100%;
+  height: 66px;
+}
+
+.bp-node rect {
+  fill: rgba(255, 255, 255, 0.55);
+  stroke: rgba(26, 67, 137, 0.5);
+  stroke-width: 1;
+}
+.bp-key rect { fill: rgba(26, 67, 137, 0.16); stroke: rgba(26, 67, 137, 0.8); }
+
+.bp-node text {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  fill: #123061;
+  text-anchor: middle;
+}
+
+.bp-arrow path, .bp-loop path {
+  fill: none;
+  stroke: rgba(26, 67, 137, 0.6);
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.bp-loop path { stroke-dasharray: 3 3; }
+
+.bp-line { stroke: rgba(26, 67, 137, 0.32); stroke-width: 1; stroke-linecap: round; }
+
+.bp-note {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 8.5px;
+  font-style: italic;
+  fill: rgba(18, 48, 97, 0.62);
+  text-anchor: middle;
+}
+
+/* Every project card is a real link now, so the old "unavailable" treatment
+   (dashed border, dimmed white, default cursor) is gone. Prospera is no
+   longer a dead card either: it is priced at $25 and enquiries go to
+   WhatsApp, so its price gets its own green line and the flag carries the
+   action. */
+
+.row-flag {
+  flex: none;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: #167a3b;
+  border: 1px solid rgba(22, 122, 59, 0.35);
+  border-radius: 999px;
+  padding: 4px 9px;
+  white-space: nowrap;
+  /* .row-head is space-between. With three children the flag would drift to
+     the middle, so this keeps title and flag together on the left and lets
+     the arrow stay on the right. */
+  margin-right: auto;
+}
+
+/* The price is its own line, green, and read before the description. It stays
+   inside the card text block rather than the head row, so the head keeps just
+   the name, the CTA flag and the arrow. */
+.row-price {
+  display: block;
+  margin-top: 7px;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: #167a3b;
+}
+
+/* ---------- BAYA: the screenshot IS the card ----------
+
+   BAYA has a real screenshot, so it gets no text block and no media strip.
+   The image fills the entire card and the name sits on top of it. The
+   description still exists in .sr-only so the link keeps a meaningful
+   accessible name instead of becoming an unlabelled picture. */
+.row-shot {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.shot-img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Favour the top of the UI, where the header and navigation are, rather
+     than dead centre of a long screenshot. */
+  object-position: 50% 26%;
+}
+
+.shot-label {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 34px 16px 13px;
+  color: #fff;
+  background: linear-gradient(to top, rgba(8, 12, 18, 0.85) 0%, rgba(8, 12, 18, 0.55) 45%, rgba(8, 12, 18, 0) 100%);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+.shot-label .row-title {
+  color: #fff;
+  font-size: 18px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+.shot-label .ico-row { color: #fff; opacity: 0.9; }
+
+/* Available to assistive tech, invisible on screen. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- pills ---------- */
+
+.pills { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 46px;
+  padding: 12px 17px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.68);
+  -webkit-backdrop-filter: blur(14px) saturate(1.15);
+  backdrop-filter: blur(14px) saturate(1.15);
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--ink);
+  box-shadow: 0 1px 2px rgba(15, 20, 26, 0.05);
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.pill:focus-visible {
+  background: rgba(255, 255, 255, 0.86);
+  border-color: rgba(26, 67, 137, 0.42);
+}
+
+.pill .ico { width: 16px; height: 16px; flex: none; color: var(--accent); }
+
+/* Static service chips (What I do). Not links, so they need no 44px tap
+   target: keep them small so the section stays as compact as a one-line
+   label list. No hover/focus behaviour because there is nothing to act on. */
+.pill-static {
+  min-height: 28px;
+  padding: 3px 12px;
+  font-size: 13.5px;
+  font-weight: 500;
+  cursor: default;
+}
+
+/* ---------- footer ---------- */
+
+.foot {
+  position: relative;
+  margin-top: 38px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  text-align: center;
+  font-size: 12.5px;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7), 0 0 10px rgba(0, 0, 0, 0.55);
+}
+
+/* Same reasoning as .id::before: the footer sits on the photograph, so it
+   carries its own local darkening instead of relying on a heavy page veil. */
+.foot::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: -14px -20px -44px -20px;
+  background: linear-gradient(180deg,
+    rgba(6, 10, 16, 0) 0%,
+    rgba(6, 10, 16, 0.58) 42%,
+    rgba(6, 10, 16, 0.72) 100%);
+  pointer-events: none;
+}
+.foot-sep { opacity: 0.55; padding: 0 3px; }
+
+/* ---------- AI video thumbnails ---------- */
+
+.vids-group[hidden] { display: none; }
+
+/* Two up at every width. A 16:9 thumbnail at one column would be nearly 400px
+   tall on a phone, which turns a link hub back into a feed. */
+.vids {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.vid {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 16px;
+  background: linear-gradient(180deg,
+    rgba(255, 255, 255, 0.80) 0%,
+    rgba(240, 246, 255, 0.66) 100%);
+  -webkit-backdrop-filter: blur(14px) saturate(1.15);
+  backdrop-filter: blur(14px) saturate(1.15);
+  box-shadow:
+    0 1px 2px rgba(15, 20, 26, 0.05),
+    0 8px 20px -14px rgba(15, 20, 26, 0.26);
+  /* Same rule as the product cards: the surface keeps its shade on hover. */
+  transition: border-color 0.2s ease, transform 0.18s ease, box-shadow 0.2s ease;
+}
+.vid:focus-visible {
+  border-color: rgba(26, 67, 137, 0.42);
+  transform: translateY(-2px);
+  box-shadow:
+    0 1px 2px rgba(15, 20, 26, 0.05),
+    0 14px 26px -16px rgba(15, 20, 26, 0.32);
+}
+
+.vid-thumb {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 9;
+  background: rgba(255, 255, 255, 0.22);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.vid-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Play badge. Purely decorative: the link is already named by the title, so
+   this is hidden from assistive tech rather than read as "play button". */
+.vid-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+  background: rgba(8, 12, 18, 0.58);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+}
+.vid-play-glyph { width: 18px; height: 18px; margin-left: 2px; }
+
+.vid-dur {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  padding: 2px 6px;
+  border-radius: 5px;
+  background: rgba(8, 12, 18, 0.74);
+  color: #fff;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  font-variant-numeric: tabular-nums;
+}
+
+.vid-title {
+  display: block;
+  padding: 9px 11px 11px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+/* ---------- free call offer ----------
+   The conversion point. Same glass language as the product cards, but tinted
+   with the accent so it reads as the action rather than another product. */
+
+.offer {
+  padding: 20px 18px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 18px;
+  background: linear-gradient(180deg,
+    rgba(255, 255, 255, 0.86) 0%,
+    rgba(233, 240, 252, 0.74) 100%);
+  -webkit-backdrop-filter: blur(14px) saturate(1.15);
+  backdrop-filter: blur(14px) saturate(1.15);
+  box-shadow:
+    0 1px 2px rgba(15, 20, 26, 0.05),
+    0 12px 28px -16px rgba(15, 20, 26, 0.3);
+}
+
+.offer-price {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 10px;
+}
+
+/* The struck reference price. It is muted on purpose: it is a comparison
+   figure, not the ask, and it must still clear AA at 15px. */
+.offer-ref {
+  font-family: var(--serif-display);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--muted);
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+}
+
+.offer-free {
+  padding: 4px 11px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--serif-display);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.offer-title {
+  font-family: var(--serif-display);
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+  margin: 0;
+  color: var(--ink);
+}
+
+.offer-desc {
+  margin: 7px 0 15px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.offer-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  min-height: 50px;
+  padding: 14px 20px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--sans);
+  font-size: 15.5px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(18, 48, 97, 0.26);
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+.offer-cta:active { transform: translateY(1px); }
+.offer-cta:disabled { opacity: 0.6; cursor: progress; }
+.offer-cta .ico-arrow { width: 18px; height: 18px; transition: transform 0.18s ease; }
+.offer-cta:focus-visible { background: var(--accent-strong); }
+.offer-cta:focus-visible .ico-arrow { transform: translateX(4px); }
+
+/* Contact pill. Accent-filled so it is distinguishable from the social pills
+   sitting next to it, which all use the plain glass treatment. */
+.pill-contact {
+  background: var(--accent);
+  border-color: transparent;
+  color: #fff;
+  font-weight: 600;
+}
+.pill-contact .ico { color: #fff; }
+.pill-contact:focus-visible {
+  background: var(--accent-strong);
+  border-color: transparent;
+}
+
+/* ---------- contact modal ---------- */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+}
+
+/* display:flex above would otherwise beat the hidden attribute. */
+.modal[hidden],
+.cform[hidden],
+.cf-ok[hidden],
+.cf-error[hidden] { display: none; }
+
+.modal-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 12, 18, 0.62);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  border: 0;
+}
+
+/* Near-opaque on purpose. A dialog is a reading surface, so it does not need
+   to show the photograph behind it. */
+.modal-panel {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  max-height: 90vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 26px 22px 22px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 20px;
+  background: rgba(250, 252, 255, 0.98);
+  box-shadow: 0 24px 60px -20px rgba(8, 12, 18, 0.6);
+}
+
+.modal-x {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.modal-x:focus-visible { background: rgba(26, 67, 137, 0.09); color: var(--ink); }
+.modal-x svg { width: 19px; height: 19px; }
+
+.modal-title {
+  padding-right: 40px;
+  font-size: 23px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.modal-sub {
+  margin: 6px 0 18px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.cform { display: block; }
+
+.cf-row { margin-bottom: 13px; }
+
+.cf-row label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.req { color: var(--accent); }
+
+.cf-row input,
+.cf-row select,
+.cf-row textarea {
+  display: block;
+  width: 100%;
+  min-height: 46px;
+  padding: 12px 13px;
+  border: 1px solid rgba(18, 48, 97, 0.24);
+  border-radius: 11px;
+  background: #fff;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15.5px;
+  line-height: 1.45;
+}
+.cf-row textarea { min-height: 104px; overflow-y: hidden; resize: none; }
+.cf-row input:focus,
+.cf-row select:focus,
+.cf-row textarea:focus {
+  border-color: var(--accent);
+  outline: 2px solid rgba(26, 67, 137, 0.28);
+  outline-offset: 1px;
+}
+.cf-row input[aria-invalid="true"],
+.cf-row select[aria-invalid="true"],
+.cf-row textarea[aria-invalid="true"] {
+  border-color: #b3261e;
+  background: rgba(179, 38, 30, 0.04);
+}
+
+.cf-error {
+  margin: 0 0 13px;
+  padding: 11px 13px;
+  border: 1px solid rgba(179, 38, 30, 0.32);
+  border-radius: 11px;
+  background: rgba(179, 38, 30, 0.08);
+  color: #8c1d18;
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+
+.cf-submit { margin-top: 4px; }
+
+.cf-hint {
+  margin: 12px 0 0;
+  font-size: 12.5px;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* Standalone links rather than one inside the sentence: an inline link in a
+   block of text is a WCAG target-size exception, but these are the real
+   fallbacks if the form fails, so they get full-size targets. */
+.cf-alts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.cf-mail {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 44px;
+  padding: 10px 18px;
+  border: 1px solid rgba(26, 67, 137, 0.28);
+  border-radius: 999px;
+  color: var(--accent);
+  font-size: 13.5px;
+  font-weight: 600;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.cf-mail:focus-visible { background: rgba(26, 67, 137, 0.07); border-color: var(--accent); }
+.cf-mail-ico { width: 15px; height: 15px; flex: none; }
+
+.cf-ok { text-align: center; padding: 6px 0 2px; }
+.cf-ok-title {
+  font-family: var(--serif-display);
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f5132;
+}
+.cf-ok-body {
+  margin: 7px 0 18px;
+  font-size: 14.5px;
+  color: var(--muted);
+}
+.cf-ok-close {
+  min-height: 46px;
+  padding: 12px 26px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.cf-ok-close:focus-visible { background: var(--accent-strong); }
+
+/* Stop the page behind the dialog from scrolling on touch devices. */
+body.modal-open { overflow: hidden; }
+
+/* ---------- wider screens: stay a narrow column ---------- */
+
+@media (min-width: 560px) {
+  .shell { padding: 0 24px 48px; }
+  /* Wide viewports are the binding case: the 720px breakpoint grows the rows and
+     the offer padding, so the identity padding is trimmed further to keep the
+     whole hub inside one screen of scrolling. */
+  .id { padding: 34px 0 34px; }
+  .id-mark { width: 60px; height: 60px; margin-bottom: 12px; }
+}
+
+@media (min-width: 720px) {
+  body { font-size: 16.5px; }
+  .group { margin-top: 38px; }
+  .row { min-height: 78px; padding: 18px 20px; }
+  .offer { padding: 24px 22px 22px; }
+}
+
+@media (min-width: 560px) {
+  .modal-panel { padding: 30px 26px 26px; }
+  .modal-title { font-size: 25px; }
+  .vids { gap: 12px; }
+  .vid-title { font-size: 13.5px; padding: 10px 13px 12px; }
+}
+
+/* Desktop: the portrait crops to a horizontal band, so anchor higher. */
+@media (min-width: 1024px) {
+  .page-bg { background-position: 50% 16%; }
+  /* The generous top padding predates the header logo, and this block wins over
+     the 560px one by source order. It is the reason the hub overran its height
+     budget on wide screens, so the top is given back to pay for the mark. */
+  .id { padding: 40px 0 38px; }
+}
+
+/* ---------- hover, only where hover actually exists ----------
+
+   Touch screens report no hover capability. Left unguarded, :hover latches
+   onto the last element tapped and holds that styling until the user taps
+   somewhere else, so on a phone every button looks like it is stuck
+   mid-press. Gating on (hover: hover) confines these to devices with a real
+   pointing device. Keyboard parity is handled by the :focus-visible twins
+   next to each base rule, and the focus outline lives at the top of the file. */
+@media (hover: hover) {
+  .portfolio:hover { background: var(--accent-strong); }
+  .portfolio:hover .ico-arrow { transform: translateX(4px); }
+
+  a.row:hover {
+    border-color: rgba(26, 67, 137, 0.42);
+    transform: translateY(-2px);
+    box-shadow:
+      0 1px 2px rgba(15, 20, 26, 0.05),
+      0 16px 32px -16px rgba(15, 20, 26, 0.34);
+  }
+  a.row:hover .ico-row { transform: translateX(4px); opacity: 1; }
+  .row-shot:hover .ico-row { transform: translateX(4px); opacity: 1; }
+
+  .pill:hover {
+    background: rgba(255, 255, 255, 0.86);
+    border-color: rgba(26, 67, 137, 0.42);
+  }
+  .pill-static:hover {
+    background: rgba(255, 255, 255, 0.68);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+  .pill-contact:hover {
+    background: var(--accent-strong);
+    border-color: transparent;
+  }
+
+  .vid:hover {
+    border-color: rgba(26, 67, 137, 0.42);
+    transform: translateY(-2px);
+    box-shadow:
+      0 1px 2px rgba(15, 20, 26, 0.05),
+      0 14px 26px -16px rgba(15, 20, 26, 0.32);
+  }
+
+  .offer-cta:hover { background: var(--accent-strong); }
+  .offer-cta:hover .ico-arrow { transform: translateX(4px); }
+
+  .modal-x:hover { background: rgba(26, 67, 137, 0.09); color: var(--ink); }
+  .cf-mail:hover { background: rgba(26, 67, 137, 0.07); border-color: var(--accent); }
+  .cf-ok-close:hover { background: var(--accent-strong); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio, .row, .pill, .ico-row, .portfolio .ico-arrow,
+  .offer-cta, .offer-cta .ico-arrow, .pill-contact, .modal-x, .cf-ok-close,
+  .vid {
+    transition: none;
+  }
+    .portfolio:active, a.row:hover, a.row:active, a.row:focus-visible,
+    .vid:hover, .vid:focus-visible { transform: none; }
+    .portfolio:hover .ico-arrow, a.row:hover .ico-row, a.row:focus-visible .ico-row,
+    .offer-cta:hover .ico-arrow, .offer-cta:focus-visible .ico-arrow { transform: none; }
+}
