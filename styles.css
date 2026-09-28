@@ -764,6 +764,13 @@ footer { border-top: 1px solid var(--border); padding: 44px 0; }
 }
 .footer-social a:hover { color: var(--accent); border-color: var(--accent); background: var(--bg-soft); }
 .footer-social svg { width: 17px; height: 17px; }
+/* The LinkedIn mark is a solid full-bleed badge, while the outline glyphs beside
+   it only paint ~83% of their 24x24 box. At equal size the badge reads visibly
+   heavier, so it is scaled back to match. Keyed on the href so the markup stays
+   plain. */
+.footer-social a[href*="linkedin.com"] svg,
+.modal-link[href*="linkedin.com"] svg,
+.contact-link[href*="linkedin.com"] svg { transform: scale(0.8); }
 .footer-copy { margin-top: 14px; font-size: 12.5px; color: var(--muted); }
 
 /* ---------------- BACK TO TOP ---------------- */
@@ -928,6 +935,125 @@ footer { border-top: 1px solid var(--border); padding: 44px 0; }
   .method { grid-template-columns: 1fr 1fr; }
   .notes-tease { grid-template-columns: 1fr; gap: 40px; }
   .ed-intro { min-height: 400px; }
+}
+
+/* ---------------- PHOTO PAGES ON PHONE AND TABLET ----------------
+   About, Notes and Contact each put a photograph behind the page. The
+   sections are direct children of <body> and are followed by <footer>, with no
+   <main> wrapper in between.
+
+   The desktop treatment paints the photo once, on the hero, with
+   `background-attachment: fixed`, and then forces every following section and
+   the footer to solid cream so the fixed photo cannot bleed past the hero. That
+   leaves the lower two thirds of About, the whole Notes CTA and the end of
+   Contact as plain cream.
+
+   Moving the photo to a `body::before` overlay would fix that, but it is the
+   wrong shape: the overlay spans the entire document, so the photograph would
+   keep running behind the footer and the footer would only *look* separate
+   because it is painted opaque on top. The photo would still be there.
+
+   So below 960px the photograph is attached to the content sections themselves
+   and clipped to them. A background is only ever painted inside its own
+   element's box, so the photograph genuinely belongs to the content region and
+   genuinely stops where the last section ends, with no overlay and nothing to
+   mask. `background-attachment: fixed` still does the sizing work, so the image
+   is measured against the viewport rather than against a hero that is several
+   thousand pixels tall on a phone, which is what made the crop unusable before.
+
+   The section fills become translucent so the photo reads through the content,
+   and the hero scrim is bounded to one screenful so its gradient cannot stretch
+   down an 8800px section. */
+@media (max-width: 960px) {
+  /* The photograph, clipped to each content section.
+
+     The bare `.section` selectors below are spelled with the same `:not()`
+     chains as the desktop `background: var(--bg)` blanket rules earlier in the
+     file. Those rules use the `background` *shorthand*, so they also reset
+     `background-image` back to none, and their `:not()` chains make them
+     heavier than a plain `.page-about .section`. Matching their weight here is
+     what stops the shorthand from quietly stripping the photo back off the
+     undecorated sections. */
+  .page-about .section:not(.about-hero):not(.alt):not(.years),
+  .page-about .section.about-hero,
+  .page-about .section.years,
+  .page-about .section.alt {
+    background-image: url("./Assets/images/about-classy-notebook.webp");
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* A phone viewport is tall and narrow, so `cover` crops hard into the
+       middle of the frame. Lifting the focal point off centre keeps the subject
+       in shot rather than the empty foreground along the bottom edge. */
+    background-position: center 25%;
+  }
+  .page-notes .section:not(.notes-intro),
+  .page-notes .section.notes-intro {
+    background-image: url("./Assets/images/notes-strategy-session.webp");
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center 25%;
+  }
+  .page-contact .section:not(.contact-hero):not(.contact-band),
+  .page-contact .section.contact-hero,
+  .page-contact .section.contact-band {
+    background-image: url("./Assets/images/contact-tech-workspace.webp");
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center 25%;
+  }
+
+  /* Section fills go translucent so the photo reads through the content.
+     These deliberately override the desktop `background: var(--bg)` blanket
+     rules further up the file. */
+  .page-about .section:not(.about-hero):not(.alt):not(.years),
+  .page-notes .section:not(.notes-intro) {
+    background-color: rgba(250, 248, 245, 0.86);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+  }
+  .page-about .section.alt {
+    background-color: rgba(241, 238, 232, 0.86);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+  }
+  /* The two deliberate dark bands stay dark bands, but lose their solid fill so
+     the photo still runs behind them. */
+  .page-about .years,
+  .page-contact .contact-band {
+    background-color: rgba(15, 20, 26, 0.88);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+  }
+  /* The hero paints no fill of its own, so the photograph behind it is the fill. */
+  .page-about .about-hero,
+  .page-contact .contact-hero,
+  .page-notes .notes-intro { background-color: transparent; }
+
+  /* The scrim only has to carry the white headline, which sits at the top.
+     Bounded to one screenful, the gradient cannot stretch down an 8800px
+     section and leave the top of the page lighter than the bottom. Softer than
+     the 0.70-0.88 desktop ramp so the photograph stays legible underneath. */
+  .page-about .about-hero::before,
+  .page-contact .contact-hero::before,
+  .page-notes .notes-intro::before {
+    inset: 0 0 auto 0;
+    height: 100vh;
+    height: 100dvh;
+  }
+  .page-about .about-hero::before { background: linear-gradient(180deg, rgba(15,20,26,0.60), rgba(15,20,26,0.78)); }
+  .page-contact .contact-hero::before { background: linear-gradient(180deg, rgba(15,20,26,0.58), rgba(15,20,26,0.78)); }
+  .page-notes .notes-intro::before { background: linear-gradient(180deg, rgba(11,18,32,0.34), rgba(11,18,32,0.56)); }
+
+  /* The footer is a separate region with its own fill. The photograph is already
+     clipped to the sections above, so none of it reaches the footer; stating the
+     fill here makes that boundary deliberate rather than incidental, and keeps
+     all three photo pages agreeing about it. */
+  .page-about footer,
+  .page-contact footer,
+  .page-notes footer { background: var(--bg); }
 }
 
 @media (max-width: 760px) {
@@ -1111,15 +1237,9 @@ footer { border-top: 1px solid var(--border); padding: 44px 0; }
 @media (max-width: 1100px) {
   .feat-grid.notes-grid { grid-template-columns: minmax(0, 1fr); max-width: 760px; }
 }
-@media (max-width: 960px), (hover: none) and (pointer: coarse) {
-  .notes-intro { background-image: none; background-attachment: scroll; clip-path: inset(0); }
-  .notes-intro::before {
-    position: fixed; inset: 0;
-    background:
-      linear-gradient(180deg, rgba(11, 18, 32, .70), rgba(11, 18, 32, .78)),
-      url("./Assets/images/notes-strategy-session.webp") center / cover no-repeat;
-  }
-}
+/* The old `position: fixed` .notes-intro::before phone override was removed:
+   it applied on any coarse-pointer device at any width, and the photo it
+   pinned to the viewport is now handled by the shared photo-page block above. */
 @media (max-width: 560px) {
   .feat-grid.notes-grid .feat-card { padding: 26px 18px; }
   .feat-grid.notes-grid .feat-body { padding: 0; }

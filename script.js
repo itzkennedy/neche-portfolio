@@ -16,17 +16,39 @@
   // Mobile nav toggle
   const burger = document.getElementById('burger');
   const navlinks = document.getElementById('navlinks');
+
+  // Single source of truth for the menu state, so the panel, the nav bar colour
+  // and aria-expanded can never drift out of sync with each other.
+  function setMenu(open) {
+    if (!nav || !burger || !navlinks) return;
+    navlinks.classList.toggle('open', open);
+    nav.classList.toggle('menu-open', open);
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  const menuIsOpen = () => !!(navlinks && navlinks.classList.contains('open'));
+  function closeMenu() { if (menuIsOpen()) setMenu(false); }
+
   if (nav && burger && navlinks) {
-    burger.addEventListener('click', () => {
-      const open = navlinks.classList.toggle('open');
-      nav.classList.toggle('menu-open', open);
-      burger.setAttribute('aria-expanded', open);
+    burger.addEventListener('click', () => setMenu(!menuIsOpen()));
+
+    // Following a link from the panel must always dismiss it. Delegated from the
+    // panel so it survives links added later, and bound on touchend too because a
+    // tap that scrolls the panel can swallow the click on touch browsers.
+    const closeIfLink = (e) => { if (e.target.closest('a')) closeMenu(); };
+    navlinks.addEventListener('click', closeIfLink);
+    navlinks.addEventListener('touchend', closeIfLink, { passive: true });
+
+    // Escape, a tap outside the panel, and crossing back to the desktop
+    // breakpoint all dismiss it too, so it is never left stranded open.
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeMenu();
     });
-    navlinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-      navlinks.classList.remove('open');
-      nav.classList.remove('menu-open');
-      burger.setAttribute('aria-expanded', 'false');
-    }));
+    document.addEventListener('click', (e) => {
+      if (menuIsOpen() && !nav.contains(e.target)) closeMenu();
+    });
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 760) closeMenu();
+    });
   }
 
   // Project screenshot fallback
@@ -151,11 +173,7 @@
     if (isOpen()) return;
     const active = document.activeElement;
     lastFocused = (active && active !== document.body && active !== document.documentElement) ? active : talkBtn;
-    if (navlinks && navlinks.classList.contains('open')) {
-      navlinks.classList.remove('open');
-      if (nav) nav.classList.remove('menu-open');
-      if (burger) burger.setAttribute('aria-expanded', 'false');
-    }
+    closeMenu();
     modal.classList.add('open');
     modal.setAttribute('aria-hidden', 'false');
     talkBtn.setAttribute('aria-expanded', 'true');
