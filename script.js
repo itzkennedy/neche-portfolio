@@ -251,7 +251,9 @@
     try {
       const offer = new URLSearchParams(window.location.search).get('offer');
       if (offer && typeSel) {
-        const map = { call: 'Free 20-minute call', review: 'Free business software review' };
+        // Values must match the options in contact.html and ALLOWED_TYPES in
+        // api/contact.js exactly. The review is a paid offer, not free.
+        const map = { call: 'Free 20-minute call', review: 'Software review / audit' };
         if (map[offer]) typeSel.value = map[offer];
       }
     } catch (e) { /* ignore */ }

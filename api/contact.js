@@ -18,7 +18,10 @@ const RECIPIENT = process.env.CONTACT_RECIPIENT || 'nechecode@gmail.com';
 
 const ALLOWED_TYPES = new Set([
   'Free 20-minute call',
-  'Free business software review',
+  // Not free. Priced at $75 on the homepage value cards. This string must stay
+  // in step with the select option in contact.html and the offer map in
+  // script.js, or the server rejects the submission as invalid.
+  'Software review / audit',
   'Website / web app',
   'App',
   'Automation',
