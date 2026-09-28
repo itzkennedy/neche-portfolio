@@ -32,11 +32,12 @@
     burger.addEventListener('click', () => setMenu(!menuIsOpen()));
 
     // Following a link from the panel must always dismiss it. Delegated from the
-    // panel so it survives links added later, and bound on touchend too because a
-    // tap that scrolls the panel can swallow the click on touch browsers.
+    // panel so it survives links added later. Closing happens on click only:
+    // if the panel were hidden on touchend, the browser would not dispatch the
+    // click to the link (the element is no longer under the finger) and the tap
+    // would navigate nowhere.
     const closeIfLink = (e) => { if (e.target.closest('a')) closeMenu(); };
     navlinks.addEventListener('click', closeIfLink);
-    navlinks.addEventListener('touchend', closeIfLink, { passive: true });
 
     // Escape, a tap outside the panel, and crossing back to the desktop
     // breakpoint all dismiss it too, so it is never left stranded open.

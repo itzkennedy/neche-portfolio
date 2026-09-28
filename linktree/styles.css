@@ -142,8 +142,12 @@ a { color: inherit; text-decoration: none; }
      clipped off-screen and only the top and bottom showed. */
   /* Top inset is +36px rather than negative, so the panel's top edge sits just
      above the logo instead of floating ~68px above it over bare photo. Side
-     pull-in (6px) keeps the ring inside the viewport on mobile. */
-  inset: 36px 6px -24px;
+     pull-out (-12px) keeps the ring clear of the name text on both edges:
+     the name fills the whole shell column, so a positive inset would make the
+     ring cut through the first and last letters instead of sitting outside
+     them. -12px lands 8px inside the viewport on a 320px phone, so it is not
+     clipped there either. */
+  inset: 36px -12px -24px;
   border-radius: 26px;
   /* Ends at 0.30, not 0, so there is a defined edge rather than a fade. */
   background: radial-gradient(64% 60% at 50% 46%,
@@ -173,7 +177,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .id-name {
-  font-size: clamp(30px, 8.4vw, 38px);
+  font-size: clamp(26px, 7vw, 38px);
   font-weight: 700;
   color: #fff;
   /* Tight dark halo carries the contrast on a now-light veil. */
